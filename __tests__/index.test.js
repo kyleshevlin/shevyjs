@@ -34,4 +34,39 @@ describe('Shevy', () => {
       expect(shevy.proximityFactor).toEqual(.85)
     })
   })
+
+  describe('Headings', () => {
+    const shevy = new Shevy()
+    const { h1, h2, h3, h4, h5, h6 } = shevy
+
+    it('h1', () => {
+      expect(h1).toBeDefined()
+      expect(h1.fontSize).toEqual(48)
+    })
+
+    it('h2', () => {
+      expect(h2).toBeDefined()
+      expect(h2.fontSize).toEqual(40)
+    })
+
+    it('h3', () => {
+      expect(h3).toBeDefined()
+      expect(h3.fontSize).toEqual(32)
+    })
+
+    it('h4', () => {
+      expect(h4).toBeDefined()
+      expect(h4.fontSize).toEqual(24)
+    })
+
+    it('h5', () => {
+      expect(h5).toBeDefined()
+      expect(h5.fontSize).toEqual(20)
+    })
+
+    it('h6', () => {
+      expect(h6).toBeDefined()
+      expect(h6.fontSize).toEqual(16)
+    })
+  })
 })

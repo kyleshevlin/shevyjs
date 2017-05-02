@@ -1,4 +1,4 @@
-import { defaultOptions } from './constants'
+import { defaultOptions, headings } from './constants'
 
 export default class Shevy {
   constructor(options) {
@@ -18,5 +18,21 @@ export default class Shevy {
     this.addMarginBottom = addMarginBottom
     this.proximity = proximity
     this.proximityFactor = proximityFactor
+
+    // Binding methods
+    this.calcFontSize = this.calcFontSize.bind(this)
+
+    // Set headings
+    baseFontScale.forEach((factor, index) => {
+      const heading = headings[index]
+      this[heading] = {
+        fontSize: this.calcFontSize(factor)
+      }
+    })
+  }
+
+  calcFontSize (factor) {
+    const fontValue = parseFloat(this.baseFontSize)
+    return fontValue * factor
   }
 }
