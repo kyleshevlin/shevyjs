@@ -1,0 +1,19 @@
+{
+  "name": "shevyjs",
+  "version": "1.0.0",
+  "description": "Shevyjs is a CSS-in-JS solution for perfect vertical rhythm with your typography",
+  "main": "src/index.js",
+  "repository": "git@github.com:kyleshevlin/shevyjs.git",
+  "author": "Kyle Shevlin <kyle.a.shevlin@gmail.com> (http://kyleshevlin.com/)",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "babel-jest": "^19.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^19.0.2"
+  }
+}
