@@ -33,6 +33,10 @@ export default class Shevy {
 
   calcFontSize (factor) {
     const fontValue = parseFloat(this.baseFontSize)
-    return fontValue * factor
+    const fontUnit = this.baseFontSize.match(/(em)|(rem)/)
+
+    return fontUnit
+      ? `${fontValue * factor}${fontUnit[0]}`
+      : fontValue * factor
   }
 }
