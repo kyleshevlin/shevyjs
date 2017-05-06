@@ -21,6 +21,8 @@ export default class Shevy {
 
     // Binding methods
     this.calcFontSize = this.calcFontSize.bind(this)
+    this.baseSpacing = this.baseSpacing.bind(this)
+    this.bs = this.bs.bind(this)
 
     // Set headings
     baseFontScale.forEach((factor, index) => {
@@ -38,5 +40,21 @@ export default class Shevy {
     return fontUnit
       ? `${fontValue * factor}${fontUnit[0]}`
       : fontValue * factor
+  }
+
+  baseSpacing (factor = 1) {
+    const {
+      baseFontSize,
+      baseLineHeight,
+      proximity,
+      proximityFactor
+    } = this
+    const spacing = parseFloat(baseFontSize) * baseLineHeight * factor
+
+    return proximity ? (spacing * proximityFactor) : spacing
+  }
+
+  bs (factor = 1) {
+    return this.baseSpacing(factor)
   }
 }

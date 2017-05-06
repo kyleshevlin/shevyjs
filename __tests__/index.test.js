@@ -1,15 +1,15 @@
 import Shevy from '../src'
 
 describe('Shevy', () => {
-  it('exists', () => {
+  it('is defined', () => {
     const shevy = new Shevy()
     expect(shevy).toBeDefined()
   })
 
-  describe('default settings', () => {
+  describe('Default settings', () => {
     const shevy = new Shevy()
 
-    it('baseFontSize is 16', () => {
+    it('baseFontSize is 16px', () => {
       expect(shevy.baseFontSize).toEqual('16px')
     })
 
@@ -33,21 +33,33 @@ describe('Shevy', () => {
     it('proximityFactor is .85', () => {
       expect(shevy.proximityFactor).toEqual(.85)
     })
+
+    describe('Headings', () => {
+      const { h1, h2, h3, h4, h5, h6 } = shevy
+
+      it('h1', () => { expect(h1.fontSize).toEqual(48) })
+      it('h2', () => { expect(h2.fontSize).toEqual(40) })
+      it('h3', () => { expect(h3.fontSize).toEqual(32) })
+      it('h4', () => { expect(h4.fontSize).toEqual(24) })
+      it('h5', () => { expect(h5.fontSize).toEqual(20) })
+      it('h6', () => { expect(h6.fontSize).toEqual(16) })
+    })
+
+    describe('Base Spacing', () => {
+      const { baseSpacing, bs } = shevy
+
+      it('baseSpacing is defined', () => { expect(baseSpacing).toBeDefined() })
+      it('bs is defined', () => { expect(bs).toBeDefined() })
+      it('baseSpacing equals 24px', () => {
+        expect(baseSpacing()).toEqual(24)
+      })
+      it('bs equals 24px', () => {
+        expect(bs()).toEqual(24)
+      })
+    })
   })
 
-  describe('Headings', () => {
-    const shevy = new Shevy()
-    const { h1, h2, h3, h4, h5, h6 } = shevy
-
-    it('h1', () => { expect(h1.fontSize).toEqual(48) })
-    it('h2', () => { expect(h2.fontSize).toEqual(40) })
-    it('h3', () => { expect(h3.fontSize).toEqual(32) })
-    it('h4', () => { expect(h4.fontSize).toEqual(24) })
-    it('h5', () => { expect(h5.fontSize).toEqual(20) })
-    it('h6', () => { expect(h6.fontSize).toEqual(16) })
-  })
-
-  describe('with custom settings', () => {
+  describe('Custom settings', () => {
     describe('unit: em', () => {
       const customOptions = { baseFontSize: '1em' }
       const shevy = new Shevy(customOptions)
