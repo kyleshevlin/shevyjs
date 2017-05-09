@@ -6,6 +6,23 @@ describe('Shevy', () => {
     expect(shevy).toBeDefined()
   })
 
+  describe('Properties', () => {
+    const shevy = new Shevy()
+    const {
+      baseFontSize,
+      baseFontUnit,
+      baseLineHeight,
+      lineHeightSpacing,
+      baseSpacing
+    } = shevy
+
+    it('baseFontSize', () => { expect(baseFontSize).toBeDefined() })
+    it('baseFontUnit', () => { expect(baseFontUnit).toBeDefined() })
+    it('baseLineHeight', () => { expect(baseLineHeight).toBeDefined() })
+    it('lineHeightSpacing', () => { expect(lineHeightSpacing).toBeDefined() })
+    it('baseSpacing', () => { expect(baseSpacing).toBeDefined() })
+  })
+
   describe('Default settings', () => {
     const shevy = new Shevy()
 
@@ -45,16 +62,18 @@ describe('Shevy', () => {
       it('h6', () => { expect(h6.fontSize).toEqual(16) })
     })
 
-    describe('Base Spacing', () => {
-      const { baseSpacing, bs } = shevy
+    describe('Base Font Unit', () => {
+      it('should equal px', () => {
+        const { baseFontUnit } = shevy
+        expect(baseFontUnit()).toEqual('px')
+      })
+    })
 
-      it('baseSpacing is defined', () => { expect(baseSpacing).toBeDefined() })
-      it('bs is defined', () => { expect(bs).toBeDefined() })
+    describe('Base Spacing', () => {
+      const { baseSpacing } = shevy
+
       it('baseSpacing equals 24px', () => {
         expect(baseSpacing()).toEqual(24)
-      })
-      it('bs equals 24px', () => {
-        expect(bs()).toEqual(24)
       })
     })
   })
