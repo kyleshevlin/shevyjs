@@ -22,7 +22,7 @@ export default class Shevy {
     this.proximityFactor = proximityFactor
 
     // Binding methods
-    this.calcFontSize = this.calcFontSize.bind(this)
+    this.calcHeadingFontSize = this.calcHeadingFontSize.bind(this)
     this.baseFontUnit = this.baseFontUnit.bind(this)
     this.baseSpacing = this.baseSpacing.bind(this)
 
@@ -30,12 +30,25 @@ export default class Shevy {
     baseFontScale.forEach((factor, index) => {
       const heading = headings[index]
       this[heading] = {
-        fontSize: this.calcFontSize(factor)
+        fontSize: this.calcHeadingFontSize(factor)
       }
     })
+
+    // Set Body
+    this.body = {
+      fontSize: parseFloat(this.baseFontSize),
+      lineHeight: this.baseLineHeight
+    }
+
+    // Set Content Elements
+    this.content = {
+      fontSize: parseFloat(this.baseFontSize),
+      lineHeight: this.baseLineHeight,
+      marginBottom: addMarginBottom ? this.baseSpacing() : undefined
+    }
   }
 
-  calcFontSize (factor) {
+  calcHeadingFontSize (factor) {
     const { baseFontSize } = this
     const fontValue = parseFloat(baseFontSize)
     const fontUnit = baseFontSize.match(emOrRemRegex)

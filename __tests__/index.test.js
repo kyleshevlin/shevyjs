@@ -62,6 +62,34 @@ describe('Shevy', () => {
       it('h6', () => { expect(h6.fontSize).toEqual(16) })
     })
 
+    describe('Body', () => {
+      const { body } = shevy
+
+      it('fontSize is 16', () => {
+        expect(body.fontSize).toEqual(16)
+      })
+
+      it('lineHeight of 1.5', () => {
+        expect(body.lineHeight).toEqual(1.5)
+      })
+    })
+
+    describe('Content', () => {
+      const { content } = shevy
+
+      it('fontSize is 16', () => {
+        expect(content.fontSize).toEqual(16)
+      })
+
+      it('lineHeight is 1.5', () => {
+        expect(content.lineHeight).toEqual(1.5)
+      })
+
+      it('marginBottom is 24', () => {
+        expect(content.marginBottom).toEqual(24)
+      })
+    })
+
     describe('Base Font Unit', () => {
       it('should equal px', () => {
         const { baseFontUnit } = shevy
