@@ -6,19 +6,32 @@ describe('Shevy', () => {
     expect(shevy).toBeDefined()
   })
 
-  describe('Properties', () => {
+  describe('Defined Properties', () => {
     const shevy = new Shevy()
     const {
       baseFontSize,
       baseFontUnit,
       baseLineHeight,
+      baseFontScale,
+      addMarginBottom,
+      proximity,
+      proximityFactor,
       lineHeightSpacing,
-      baseSpacing
+      baseSpacing,
+      body,
+      content
     } = shevy
 
     it('baseFontSize', () => { expect(baseFontSize).toBeDefined() })
     it('baseFontUnit', () => { expect(baseFontUnit).toBeDefined() })
     it('baseLineHeight', () => { expect(baseLineHeight).toBeDefined() })
+    it('baseFontScale', () => { expect(baseFontScale).toBeDefined() })
+    it('addMarginBottom', () => { expect(addMarginBottom).toBeDefined() })
+    it('addMarginBottom', () => { expect(addMarginBottom).toBeDefined() })
+    it('proximity', () => { expect(proximity).toBeDefined() })
+    it('proximityFactor', () => { expect(proximityFactor).toBeDefined() })
+    it('body', () => { expect(body).toBeDefined() })
+    it('content', () => { expect(content).toBeDefined() })
     it('lineHeightSpacing', () => { expect(lineHeightSpacing).toBeDefined() })
     it('baseSpacing', () => { expect(baseSpacing).toBeDefined() })
   })
@@ -26,29 +39,35 @@ describe('Shevy', () => {
   describe('Default settings', () => {
     const shevy = new Shevy()
 
-    it('baseFontSize is 16px', () => {
-      expect(shevy.baseFontSize).toEqual('16px')
-    })
+    describe('Property Values', () => {
+      it('baseFontSize is 16px', () => {
+        expect(shevy.baseFontSize).toEqual('16px')
+      })
 
-    it('baseLineHeight is 1.5', () => {
-      expect(shevy.baseLineHeight).toEqual(1.5)
-    })
+      it('baseFontUnit is px', () => {
+        expect(shevy.baseFontUnit).toEqual('px')
+      })
 
-    it('baseFontScale is an array of default values', () => {
-      const expectedScale = [3, 2.5, 2, 1.5, 1.25, 1]
-      expect(shevy.baseFontScale).toEqual(expectedScale)
-    })
+      it('baseLineHeight is 1.5', () => {
+        expect(shevy.baseLineHeight).toEqual(1.5)
+      })
 
-    it('addMarginBottom is true', () => {
-      expect(shevy.addMarginBottom).toEqual(true)
-    })
+      it('baseFontScale is an array of default values', () => {
+        const expectedScale = [3, 2.5, 2, 1.5, 1.25, 1]
+        expect(shevy.baseFontScale).toEqual(expectedScale)
+      })
 
-    it('proximity is false', () => {
-      expect(shevy.proximity).toEqual(false)
-    })
+      it('addMarginBottom is true', () => {
+        expect(shevy.addMarginBottom).toEqual(true)
+      })
 
-    it('proximityFactor is .85', () => {
-      expect(shevy.proximityFactor).toEqual(.85)
+      it('proximity is false', () => {
+        expect(shevy.proximity).toEqual(false)
+      })
+
+      it('proximityFactor is .85', () => {
+        expect(shevy.proximityFactor).toEqual(.85)
+      })
     })
 
     describe('Headings', () => {
@@ -90,18 +109,13 @@ describe('Shevy', () => {
       })
     })
 
-    describe('Base Font Unit', () => {
-      it('should equal px', () => {
-        const { baseFontUnit } = shevy
-        expect(baseFontUnit).toEqual('px')
+    describe('Methods', () => {
+      it('lineHeightSpacing returns 24px', () => {
+        expect(shevy.lineHeightSpacing()).toEqual('24px')
       })
-    })
 
-    describe('Base Spacing', () => {
-      const { baseSpacing } = shevy
-
-      it('baseSpacing equals 24px', () => {
-        expect(baseSpacing()).toEqual('24px')
+      it('baseSpacing returns 24px', () => {
+        expect(shevy.baseSpacing()).toEqual('24px')
       })
     })
   })
