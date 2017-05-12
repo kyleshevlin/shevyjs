@@ -54,19 +54,19 @@ describe('Shevy', () => {
     describe('Headings', () => {
       const { h1, h2, h3, h4, h5, h6 } = shevy
 
-      it('h1', () => { expect(h1.fontSize).toEqual(48) })
-      it('h2', () => { expect(h2.fontSize).toEqual(40) })
-      it('h3', () => { expect(h3.fontSize).toEqual(32) })
-      it('h4', () => { expect(h4.fontSize).toEqual(24) })
-      it('h5', () => { expect(h5.fontSize).toEqual(20) })
-      it('h6', () => { expect(h6.fontSize).toEqual(16) })
+      it('h1', () => { expect(h1.fontSize).toEqual('48px') })
+      it('h2', () => { expect(h2.fontSize).toEqual('40px') })
+      it('h3', () => { expect(h3.fontSize).toEqual('32px') })
+      it('h4', () => { expect(h4.fontSize).toEqual('24px') })
+      it('h5', () => { expect(h5.fontSize).toEqual('20px') })
+      it('h6', () => { expect(h6.fontSize).toEqual('16px') })
     })
 
     describe('Body', () => {
       const { body } = shevy
 
-      it('fontSize is 16', () => {
-        expect(body.fontSize).toEqual(16)
+      it('fontSize is 16px', () => {
+        expect(body.fontSize).toEqual('16px')
       })
 
       it('lineHeight of 1.5', () => {
@@ -77,23 +77,23 @@ describe('Shevy', () => {
     describe('Content', () => {
       const { content } = shevy
 
-      it('fontSize is 16', () => {
-        expect(content.fontSize).toEqual(16)
+      it('fontSize is 16px', () => {
+        expect(content.fontSize).toEqual('16px')
       })
 
       it('lineHeight is 1.5', () => {
         expect(content.lineHeight).toEqual(1.5)
       })
 
-      it('marginBottom is 24', () => {
-        expect(content.marginBottom).toEqual(24)
+      it('marginBottom is 24px', () => {
+        expect(content.marginBottom).toEqual('24px')
       })
     })
 
     describe('Base Font Unit', () => {
       it('should equal px', () => {
         const { baseFontUnit } = shevy
-        expect(baseFontUnit()).toEqual('px')
+        expect(baseFontUnit).toEqual('px')
       })
     })
 
@@ -101,7 +101,7 @@ describe('Shevy', () => {
       const { baseSpacing } = shevy
 
       it('baseSpacing equals 24px', () => {
-        expect(baseSpacing()).toEqual(24)
+        expect(baseSpacing()).toEqual('24px')
       })
     })
   })
@@ -152,6 +152,21 @@ describe('Shevy', () => {
           expect(content.marginBottom).toEqual('2em')
         })
       })
+
+      describe('Base Font Unit', () => {
+        it('should equal em', () => {
+          const { baseFontUnit } = shevy
+          expect(baseFontUnit).toEqual('em')
+        })
+      })
+
+      describe('Base Spacing', () => {
+        const { baseSpacing } = shevy
+
+        it('baseSpacing equals 2em', () => {
+          expect(baseSpacing()).toEqual('2em')
+        })
+      })
     })
 
     describe('unit: rem', () => {
@@ -197,6 +212,21 @@ describe('Shevy', () => {
 
         it('marginBottom is 2rem', () => {
           expect(content.marginBottom).toEqual('2rem')
+        })
+      })
+
+      describe('Base Font Unit', () => {
+        it('should equal rem', () => {
+          const { baseFontUnit } = shevy
+          expect(baseFontUnit).toEqual('rem')
+        })
+      })
+
+      describe('Base Spacing', () => {
+        const { baseSpacing } = shevy
+
+        it('baseSpacing equals 2rem', () => {
+          expect(baseSpacing()).toEqual('2rem')
         })
       })
     })

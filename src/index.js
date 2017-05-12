@@ -2,6 +2,15 @@ import { defaultOptions, headings } from './constants'
 
 const emOrRemRegex = /(em)|(rem)/
 
+const getFontValue = size => {
+  return parseFloat(size)
+}
+
+const getFontUnit = size => {
+  const match = size.match(emOrRemRegex)
+  return match ? match[0] : 'px'
+}
+
 export default class Shevy {
   constructor(options) {
     const mergedOptions = { ...defaultOptions, ...options }
@@ -15,6 +24,7 @@ export default class Shevy {
     } = mergedOptions
 
     this.baseFontSize = baseFontSize
+    this.baseFontUnit = getFontUnit(baseFontSize)
     this.baseLineHeight = baseLineHeight
     this.baseFontScale = baseFontScale
     this.addMarginBottom = addMarginBottom
@@ -23,7 +33,7 @@ export default class Shevy {
 
     // Binding methods
     this.calcHeadingFontSize = this.calcHeadingFontSize.bind(this)
-    this.baseFontUnit = this.baseFontUnit.bind(this)
+    this.lineHeightSpacing = this.lineHeightSpacing.bind(this)
     this.baseSpacing = this.baseSpacing.bind(this)
 
     // Set headings
@@ -36,13 +46,13 @@ export default class Shevy {
 
     // Set Body
     this.body = {
-      fontSize: parseFloat(this.baseFontSize),
+      fontSize: this.baseFontSize,
       lineHeight: this.baseLineHeight
     }
 
     // Set Content Elements
     this.content = {
-      fontSize: parseFloat(this.baseFontSize),
+      fontSize: this.baseFontSize,
       lineHeight: this.baseLineHeight,
       marginBottom: addMarginBottom ? this.baseSpacing() : undefined
     }
@@ -50,22 +60,18 @@ export default class Shevy {
 
   calcHeadingFontSize (factor) {
     const { baseFontSize } = this
-    const fontValue = parseFloat(baseFontSize)
-    const fontUnit = baseFontSize.match(emOrRemRegex)
+    const value = getFontValue(baseFontSize)
+    const unit = getFontUnit(baseFontSize)
 
-    return fontUnit
-      ? `${fontValue * factor}${fontUnit[0]}`
-      : fontValue * factor
-  }
-
-  baseFontUnit () {
-    const emOrRem = this.baseFontSize.match(emOrRemRegex)
-    return emOrRem ? emOrRem : 'px'
+    return `${value * factor}${unit}`
   }
 
   lineHeightSpacing (factor = 1) {
     const { baseFontSize, baseLineHeight } = this
-    return parseFloat(baseFontSize) * baseLineHeight * factor
+    const value = getFontValue(baseFontSize)
+    const unit = getFontUnit(baseFontSize)
+
+    return `${value * baseLineHeight * factor}${unit}`
   }
 
   baseSpacing (factor = 1) {
@@ -75,8 +81,14 @@ export default class Shevy {
       proximity,
       proximityFactor
     } = this
-    const spacing = parseFloat(baseFontSize) * baseLineHeight * factor
+    const value = getFontValue(baseFontSize)
+    const unit = getFontUnit(baseFontSize)
+    let spacing = value * baseLineHeight * factor
 
-    return proximity ? (spacing * proximityFactor) : spacing
+    if (proximity) {
+      spacing = spacing * proximityFactor
+    }
+
+    return `${spacing}${unit}`
   }
 }
