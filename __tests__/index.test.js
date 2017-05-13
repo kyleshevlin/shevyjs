@@ -355,5 +355,32 @@ describe('Shevy', () => {
         })
       })
     })
+
+    describe('baseFontScale', () => {
+      describe('has length < 6', () => {
+        const shevy = new Shevy({
+          baseFontScale: [3, 2, 1]
+        })
+
+        describe('Undefined Headings', () => {
+          const { h4, h5, h6 } = shevy
+
+          it('h4 should be undefined', () => { expect(h4).not.toBeDefined() })
+          it('h5 should be undefined', () => { expect(h5).not.toBeDefined() })
+          it('h6 should be undefined', () => { expect(h6).not.toBeDefined() })
+        })
+      })
+
+      describe('has length > 6', () => {
+        const shevy = new Shevy({
+          baseFontScale: [7, 6, 5, 4, 3, 2, 1]
+        })
+
+        it('should trim array to length of 6, removing from the end', () => {
+          const expectedArray = [7, 6, 5, 4, 3, 2]
+          expect(shevy.baseFontScale).toEqual(expectedArray)
+        })
+      })
+    })
   })
 })

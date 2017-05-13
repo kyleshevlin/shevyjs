@@ -12,6 +12,10 @@ const getFontUnit = size => {
   return match ? match[0] : 'px'
 }
 
+const trimArrayTo6 = array => {
+  return array.length <= 6 ? array : array.slice(0, 6)
+}
+
 export default class Shevy {
   constructor(options) {
     const mergedOptions = { ...defaultOptions, ...options }
@@ -27,7 +31,7 @@ export default class Shevy {
     this.baseFontSize = baseFontSize
     this.baseFontUnit = getFontUnit(baseFontSize)
     this.baseLineHeight = baseLineHeight
-    this.baseFontScale = baseFontScale
+    this.baseFontScale = trimArrayTo6(baseFontScale)
     this.addMarginBottom = addMarginBottom
     this.proximity = proximity
     this.proximityFactor = proximityFactor
