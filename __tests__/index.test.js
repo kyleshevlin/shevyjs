@@ -78,26 +78,31 @@ describe('Shevy', () => {
         it('lineHeight is 1', () => { expect(h1.lineHeight).toEqual(1) })
         it('marginBottom is 24px', () => { expect(h1.marginBottom).toEqual('24px') })
       })
+
       describe('h2', () => {
         it('fontSize is 40px', () => { expect(h2.fontSize).toEqual('40px') })
         it('lineHeight is 1.2', () => { expect(h2.lineHeight).toEqual(1.2) })
         it('marginBottom is 24px', () => { expect(h2.marginBottom).toEqual('24px') })
       })
+
       describe('h3', () => {
         it('fontSize is 32px', () => { expect(h3.fontSize).toEqual('32px') })
         it('lineHeight is 1.125', () => { expect(h3.lineHeight).toEqual(1.125) })
         it('marginBottom is 24px', () => { expect(h3.marginBottom).toEqual('24px') })
       })
+
       describe('h4', () => {
         it('fontSize is 24px', () => { expect(h4.fontSize).toEqual('24px') })
         it('lineHeight is 1', () => { expect(h4.lineHeight).toEqual(1) })
         it('marginBottom is 24px', () => { expect(h4.marginBottom).toEqual('24px') })
       })
+
       describe('h5', () => {
         it('fontSize is 20px', () => { expect(h5.fontSize).toEqual('20px') })
         it('lineHeight is 1.2', () => { expect(h5.lineHeight).toEqual(1.2) })
         it('marginBottom is 24px', () => { expect(h5.marginBottom).toEqual('24px') })
       })
+
       describe('h6', () => {
         it('fontSize is 16px', () => { expect(h6.fontSize).toEqual('16px') })
         it('lineHeight is 1.5', () => { expect(h6.lineHeight).toEqual(1.5) })
@@ -146,10 +151,9 @@ describe('Shevy', () => {
 
   describe('Custom settings', () => {
     describe('unit: em', () => {
-      const customOptions = {
+      const shevy = new Shevy({
         baseFontSize: '1em'
-      }
-      const shevy = new Shevy(customOptions)
+      })
 
       describe('Property Values', () => {
         it('baseFontSize is 1em', () => {
@@ -169,26 +173,31 @@ describe('Shevy', () => {
           it('lineHeight is 1', () => { expect(h1.lineHeight).toEqual(1) })
           it('marginBottom is 0.5em', () => { expect(h1.marginBottom).toEqual('0.5em') })
         })
+
         describe('h2', () => {
           it('fontSize is 2.5em', () => { expect(h2.fontSize).toEqual('2.5em') })
           it('lineHeight is 1.2', () => { expect(h2.lineHeight).toEqual(1.2) })
           it('marginBottom is 0.6em', () => { expect(h2.marginBottom).toEqual('0.6em') })
         })
+
         describe('h3', () => {
           it('fontSize is 2em', () => { expect(h3.fontSize).toEqual('2em') })
           it('lineHeight is 1.125', () => { expect(h3.lineHeight).toEqual(1.125) })
           it('marginBottom is 0.75em', () => { expect(h3.marginBottom).toEqual('0.75em') })
         })
+
         describe('h4', () => {
           it('fontSize is 1.5em', () => { expect(h4.fontSize).toEqual('1.5em') })
           it('lineHeight is 1', () => { expect(h4.lineHeight).toEqual(1) })
           it('marginBottom is 1em', () => { expect(h4.marginBottom).toEqual('1em') })
         })
+
         describe('h5', () => {
           it('fontSize is 1.25em', () => { expect(h5.fontSize).toEqual('1.25em') })
           it('lineHeight is 1.2', () => { expect(h5.lineHeight).toEqual(1.2) })
           it('marginBottom is 1.2em', () => { expect(h5.marginBottom).toEqual('1.2em') })
         })
+
         describe('h6', () => {
           it('fontSize is 1em', () => { expect(h6.fontSize).toEqual('1em') })
           it('lineHeight is 1.5', () => { expect(h6.lineHeight).toEqual(1.5) })
@@ -224,10 +233,9 @@ describe('Shevy', () => {
     })
 
     describe('unit: rem', () => {
-      const customOptions = {
+      const shevy = new Shevy({
         baseFontSize: '1rem'
-      }
-      const shevy = new Shevy(customOptions)
+      })
 
       describe('Property Values', () => {
         it('baseFontSize is 1rem', () => {
@@ -247,26 +255,31 @@ describe('Shevy', () => {
           it('lineHeight is 1', () => { expect(h1.lineHeight).toEqual(1) })
           it('marginBottom is 1.5rem', () => { expect(h1.marginBottom).toEqual('1.5rem') })
         })
+
         describe('h2', () => {
           it('fontSize is 2.5rem', () => { expect(h2.fontSize).toEqual('2.5rem') })
           it('lineHeight is 1.2', () => { expect(h2.lineHeight).toEqual(1.2) })
           it('marginBottom is 1.5rem', () => { expect(h2.marginBottom).toEqual('1.5rem') })
         })
+
         describe('h3', () => {
           it('fontSize is 2rem', () => { expect(h3.fontSize).toEqual('2rem') })
           it('lineHeight is 1.125', () => { expect(h3.lineHeight).toEqual(1.125) })
           it('marginBottom is 1.5rem', () => { expect(h3.marginBottom).toEqual('1.5rem') })
         })
+
         describe('h4', () => {
           it('fontSize is 1.5rem', () => { expect(h4.fontSize).toEqual('1.5rem') })
           it('lineHeight is 1', () => { expect(h4.lineHeight).toEqual(1) })
           it('marginBottom is 1.5rem', () => { expect(h4.marginBottom).toEqual('1.5rem') })
         })
+
         describe('h5', () => {
           it('fontSize is 1.25rem', () => { expect(h5.fontSize).toEqual('1.25rem') })
           it('lineHeight is 1.2', () => { expect(h5.lineHeight).toEqual(1.2) })
           it('marginBottom is 1.5rem', () => { expect(h5.marginBottom).toEqual('1.5rem') })
         })
+
         describe('h6', () => {
           it('fontSize is 1rem', () => { expect(h6.fontSize).toEqual('1rem') })
           it('lineHeight is 1.5', () => { expect(h6.lineHeight).toEqual(1.5) })
@@ -297,6 +310,48 @@ describe('Shevy', () => {
 
         it('baseSpacing returns 1.5rem', () => {
           expect(shevy.baseSpacing()).toEqual('1.5rem')
+        })
+      })
+    })
+
+    describe('baseLineHeight: 2', () => {
+      const shevy = new Shevy({
+        baseLineHeight: 2
+      })
+
+      describe('Headings', () => {
+        const { h1, h2, h3, h4, h5, h6 } = shevy
+
+        describe('h1', () => {
+          it('lineHeight is 1', () => { expect(h1.lineHeight).toEqual(1) })
+          it('marginBottom is 32px', () => { expect(h1.marginBottom).toEqual('32px') })
+        })
+
+        describe('h2', () => {
+          it('lineHeight is 1.2', () => { expect(h2.lineHeight).toEqual(1.2) })
+          it('marginBottom is 32px', () => { expect(h2.marginBottom).toEqual('32px') })
+        })
+
+        describe('h3', () => {
+          it('lineHeight is 1', () => { expect(h3.lineHeight).toEqual(1) })
+          it('marginBottom is 32px', () => { expect(h3.marginBottom).toEqual('32px') })
+        })
+
+        describe('h4', () => {
+          it('lineHeight is 1.3333333333333333', () => {
+            expect(h4.lineHeight).toEqual(1.3333333333333333)
+          })
+          it('marginBottom is 32px', () => { expect(h4.marginBottom).toEqual('32px') })
+        })
+
+        describe('h5', () => {
+          it('lineHeight is 1.6', () => { expect(h5.lineHeight).toEqual(1.6) })
+          it('marginBottom is 32px', () => { expect(h5.marginBottom).toEqual('32px') })
+        })
+
+        describe('h6', () => {
+          it('lineHeight is 2', () => { expect(h6.lineHeight).toEqual(2) })
+          it('marginBottom is 32px', () => { expect(h6.marginBottom).toEqual('32px') })
         })
       })
     })
