@@ -1,15 +1,18 @@
-const emOrRemRegex = /r?em$/
-
 export const getFontValue = size => {
   return parseFloat(size)
 }
 
 export const getFontUnit = size => {
-  const match = size.match(emOrRemRegex)
-  return match ? match[0] : 'px'
+  const match = size.match(/px|r?em$/)
+
+  if (!match) {
+    throw new Error('Unsupported font unit: Shevy only supports px, em, or rem.')
+  }
+
+  return match[0]
 }
 
-export const trimArrayTo6 = array => {
+export const trimArrayToMaxOf6 = array => {
   return array.length <= 6 ? array : array.slice(0, 6)
 }
 
