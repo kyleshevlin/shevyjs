@@ -112,7 +112,7 @@ export default class Shevy {
       const fontValue = getFontValue(fontSize)
       const spacingValue = getFontValue(spacing)
 
-      return `${spacingValue / fontValue}${spacingUnit}` 
+      return `${spacingValue / fontValue}${spacingUnit}`
     } else {
       return spacing
     }
