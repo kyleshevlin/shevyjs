@@ -382,5 +382,32 @@ describe('Shevy', () => {
         })
       })
     })
+
+    describe('addMarginBottom: false', () => {
+      const shevy = new Shevy({
+        addMarginBottom: false
+      })
+
+      describe('Headings', () => {
+        const { h1, h2, h3, h4, h5, h6 } = shevy
+
+        it('marginBottoms should be undefined', () => {
+          expect(h1.marginBottom).not.toBeDefined()
+          expect(h2.marginBottom).not.toBeDefined()
+          expect(h3.marginBottom).not.toBeDefined()
+          expect(h4.marginBottom).not.toBeDefined()
+          expect(h5.marginBottom).not.toBeDefined()
+          expect(h6.marginBottom).not.toBeDefined()
+        })
+      })
+
+      describe('Content', () => {
+        const { content } = shevy
+
+        it('marginBottom should be undefined', () => {
+          expect(content.marginBottom).not.toBeDefined()
+        })
+      })
+    })
   })
 })
