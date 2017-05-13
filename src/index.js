@@ -33,6 +33,8 @@ export default class Shevy {
 
     // Binding methods
     this.calcHeadingFontSize = this.calcHeadingFontSize.bind(this)
+    this.calcHeadingLineHeight = this.calcHeadingLineHeight.bind(this)
+    this.calcHeadingMarginBottom = this.calcHeadingMarginBottom.bind(this)
     this.lineHeightSpacing = this.lineHeightSpacing.bind(this)
     this.baseSpacing = this.baseSpacing.bind(this)
 
@@ -40,7 +42,9 @@ export default class Shevy {
     baseFontScale.forEach((factor, index) => {
       const heading = headings[index]
       this[heading] = {
-        fontSize: this.calcHeadingFontSize(factor)
+        fontSize: this.calcHeadingFontSize(factor),
+        lineHeight: this.calcHeadingLineHeight(factor),
+        marginBottom: this.calcHeadingMarginBottom(addMarginBottom)
       }
     })
 
@@ -64,6 +68,33 @@ export default class Shevy {
     const unit = getFontUnit(baseFontSize)
 
     return `${value * factor}${unit}`
+  }
+
+  calcHeadingLineHeight (factor) {
+    const {
+      calcHeadingFontSize,
+      lineHeightSpacing
+    } = this
+    const fontSize = calcHeadingFontSize(factor)
+    const spacing = lineHeightSpacing()
+    let lineHeight = 0
+    let multiplier = 1
+
+    if (fontSize <= spacing) {
+      lineHeight = spacing
+    } else {
+      while (lineHeightSpacing(multiplier) < fontSize) {
+        multiplier += .5
+      }
+
+      lineHeight = lineHeightSpacing(multiplier)
+    }
+
+    return lineHeight
+  }
+
+  calcHeadingMarginBottom (addMarginBottom) {
+    return addMarginBottom ? this.baseSpacing() : undefined
   }
 
   lineHeightSpacing (factor = 1) {

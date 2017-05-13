@@ -73,12 +73,36 @@ describe('Shevy', () => {
     describe('Headings', () => {
       const { h1, h2, h3, h4, h5, h6 } = shevy
 
-      it('h1', () => { expect(h1.fontSize).toEqual('48px') })
-      it('h2', () => { expect(h2.fontSize).toEqual('40px') })
-      it('h3', () => { expect(h3.fontSize).toEqual('32px') })
-      it('h4', () => { expect(h4.fontSize).toEqual('24px') })
-      it('h5', () => { expect(h5.fontSize).toEqual('20px') })
-      it('h6', () => { expect(h6.fontSize).toEqual('16px') })
+      describe('h1', () => {
+        it('fontSize is 48px', () => { expect(h1.fontSize).toEqual('48px') })
+        it('lineHeight is 60px', () => { expect(h1.lineHeight).toEqual('48px') })
+        it('marginBottom is 24px', () => { expect(h1.marginBottom).toEqual('24px') })
+      })
+      describe('h2', () => {
+        it('fontSize is 40px', () => { expect(h2.fontSize).toEqual('40px') })
+        it('lineHeight is 48px', () => { expect(h2.lineHeight).toEqual('48px') })
+        it('marginBottom is 24px', () => { expect(h2.marginBottom).toEqual('24px') })
+      })
+      describe('h3', () => {
+        it('fontSize is 32px', () => { expect(h3.fontSize).toEqual('32px') })
+        it('lineHeight is 36px', () => { expect(h3.lineHeight).toEqual('36px') })
+        it('marginBottom is 24px', () => { expect(h3.marginBottom).toEqual('24px') })
+      })
+      describe('h4', () => {
+        it('fontSize is 24px', () => { expect(h4.fontSize).toEqual('24px') })
+        it('lineHeight is 24px', () => { expect(h4.lineHeight).toEqual('24px') })
+        it('marginBottom is 24px', () => { expect(h4.marginBottom).toEqual('24px') })
+      })
+      describe('h5', () => {
+        it('fontSize is 20px', () => { expect(h5.fontSize).toEqual('20px') })
+        it('lineHeight is 24px', () => { expect(h5.lineHeight).toEqual('24px') })
+        it('marginBottom is 24px', () => { expect(h5.marginBottom).toEqual('24px') })
+      })
+      describe('h6', () => {
+        it('fontSize is 16px', () => { expect(h6.fontSize).toEqual('16px') })
+        it('lineHeight is 24px', () => { expect(h6.lineHeight).toEqual('24px') })
+        it('marginBottom is 24px', () => { expect(h6.marginBottom).toEqual('24px') })
+      })
     })
 
     describe('Body', () => {
