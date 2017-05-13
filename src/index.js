@@ -48,7 +48,7 @@ export default class Shevy {
       lineHeight: this.baseLineHeight
     }
 
-    // Set Content Elements
+    // Set Content
     this.content = {
       fontSize: this.baseFontSize,
       lineHeight: this.baseLineHeight,
