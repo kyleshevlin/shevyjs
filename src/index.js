@@ -1,6 +1,5 @@
 import { defaultOptions, headings } from './constants'
 
-const emRegex = /em/
 const emOrRemRegex = /r?em$/
 
 const getFontValue = size => {
