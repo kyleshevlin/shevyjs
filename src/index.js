@@ -1,6 +1,7 @@
 import { defaultOptions, headings } from './constants'
 
-const emOrRemRegex = /(em)|(rem)/
+const emRegex = /em/
+const emOrRemRegex = /r?em$/
 
 const getFontValue = size => {
   return parseFloat(size)
@@ -44,7 +45,7 @@ export default class Shevy {
       this[heading] = {
         fontSize: this.calcHeadingFontSize(factor),
         lineHeight: this.calcHeadingLineHeight(factor),
-        marginBottom: this.calcHeadingMarginBottom(addMarginBottom)
+        marginBottom: this.calcHeadingMarginBottom(factor, addMarginBottom)
       }
     })
 
@@ -76,25 +77,42 @@ export default class Shevy {
       lineHeightSpacing
     } = this
     const fontSize = calcHeadingFontSize(factor)
+    const fontValue = getFontValue(fontSize)
     const spacing = lineHeightSpacing()
+    const spacingValue = getFontValue(spacing)
     let lineHeight = 0
     let multiplier = 1
 
-    if (fontSize <= spacing) {
-      lineHeight = spacing
+    if (fontValue <= spacingValue) {
+      lineHeight = spacingValue / fontValue
     } else {
-      while (lineHeightSpacing(multiplier) < fontSize) {
+      while (getFontValue(lineHeightSpacing(multiplier)) < fontValue) {
         multiplier += .5
       }
 
-      lineHeight = lineHeightSpacing(multiplier)
+      lineHeight = getFontValue(lineHeightSpacing(multiplier)) / fontValue
     }
 
     return lineHeight
   }
 
-  calcHeadingMarginBottom (addMarginBottom) {
-    return addMarginBottom ? this.baseSpacing() : undefined
+  calcHeadingMarginBottom (factor, addMarginBottom) {
+    if (!addMarginBottom) {
+      return undefined
+    }
+
+    const spacing = this.baseSpacing()
+    const spacingUnit = getFontUnit(spacing)
+
+    if (spacingUnit === 'em') {
+      const fontSize = this.calcHeadingFontSize(factor)
+      const fontValue = getFontValue(fontSize)
+      const spacingValue = getFontValue(spacing)
+
+      return `${spacingValue / fontValue}${spacingUnit}` 
+    } else {
+      return spacing
+    }
   }
 
   lineHeightSpacing (factor = 1) {
