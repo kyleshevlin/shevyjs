@@ -365,9 +365,9 @@ describe('Shevy', () => {
         describe('Undefined Headings', () => {
           const { h4, h5, h6 } = shevy
 
-          it('h4 should be undefined', () => { expect(h4).not.toBeDefined() })
-          it('h5 should be undefined', () => { expect(h5).not.toBeDefined() })
-          it('h6 should be undefined', () => { expect(h6).not.toBeDefined() })
+          it('h4 is undefined', () => { expect(h4).not.toBeDefined() })
+          it('h5 is undefined', () => { expect(h5).not.toBeDefined() })
+          it('h6 is undefined', () => { expect(h6).not.toBeDefined() })
         })
       })
 
@@ -391,7 +391,7 @@ describe('Shevy', () => {
       describe('Headings', () => {
         const { h1, h2, h3, h4, h5, h6 } = shevy
 
-        it('marginBottoms should be undefined', () => {
+        it('marginBottoms are undefined', () => {
           expect(h1.marginBottom).not.toBeDefined()
           expect(h2.marginBottom).not.toBeDefined()
           expect(h3.marginBottom).not.toBeDefined()
@@ -404,8 +404,35 @@ describe('Shevy', () => {
       describe('Content', () => {
         const { content } = shevy
 
-        it('marginBottom should be undefined', () => {
+        it('marginBottom is undefined', () => {
           expect(content.marginBottom).not.toBeDefined()
+        })
+      })
+    })
+
+    describe('proximity: true', () => {
+      const shevy = new Shevy({
+        proximity: true
+      })
+
+      describe('Headings', () => {
+        const { h1, h2, h3, h4, h5, h6 } = shevy
+
+        it('all marginBottoms are 20.4px', () => {
+          expect(h1.marginBottom).toEqual('20.4px')
+          expect(h2.marginBottom).toEqual('20.4px')
+          expect(h3.marginBottom).toEqual('20.4px')
+          expect(h4.marginBottom).toEqual('20.4px')
+          expect(h5.marginBottom).toEqual('20.4px')
+          expect(h6.marginBottom).toEqual('20.4px')
+        })
+      })
+
+      describe('Content', () => {
+        const { content } = shevy
+
+        it('marginBottom equals 20.4px', () => {
+          expect(content.marginBottom).toEqual('20.4px')
         })
       })
     })
