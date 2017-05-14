@@ -9,7 +9,7 @@ import {
 } from './utils'
 
 export default class Shevy {
-  constructor(options) {
+  constructor (options) {
     const mergedOptions = { ...defaultOptions, ...options }
     const {
       baseFontSize,

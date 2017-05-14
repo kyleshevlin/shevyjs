@@ -25,10 +25,7 @@ export function calcHeadingFontSize (thisArg, factor) {
 }
 
 export function calcHeadingLineHeight (thisArg, factor) {
-  const {
-    baseFontSize,
-    lineHeightSpacing
-  } = thisArg
+  const { lineHeightSpacing } = thisArg
   const fontSize = calcHeadingFontSize(thisArg, factor)
   const fontValue = getFontValue(fontSize)
   const spacing = lineHeightSpacing()
@@ -40,7 +37,7 @@ export function calcHeadingLineHeight (thisArg, factor) {
     lineHeight = spacingValue / fontValue
   } else {
     while (getFontValue(lineHeightSpacing(multiplier)) < fontValue) {
-      multiplier += .5
+      multiplier += 0.5
     }
 
     lineHeight = getFontValue(lineHeightSpacing(multiplier)) / fontValue
