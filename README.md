@@ -41,11 +41,11 @@ const MyComponent = () => (
 export default MyComponent
 ```
 
-## Defaults
+## Default Options
 
-ShevyJS comes with a set of defaults that can be easily overwritten.
+ShevyJS comes with a set of defaults that can be easily overwritten. To overwrite any of these options, pass an options object into `Shevy()` at instantiation.
 
-```
+```javascript
 const defaultOptions = {
   baseFontSize: '16px',
   baseLineHeight: 1.5,
@@ -79,3 +79,44 @@ It is often more aesthetically pleasing to bring your margins closer than your b
 ### proximityFactor
 
 This value will be multiplied against the base spacing determined by ShevyJS's mathematics, and will either increase or decrease the margin bottoms by this factor.
+
+## Methods
+
+Shevy has two methods that can be useful in your design system for creating distances that fall in line with your baseline grid.
+
+### lineHeightSpacing
+
+The `lineHeightSpacing()` method takes one argument, a number (which defaults to 1), and multiplies it with the result of the `baseFontSize` multiplied by the `baseLineHeight`.
+
+### baseSpacing
+
+The `baseSpacing()` method takes one argument, a number (which defaults to 1), and multiplies it with the result of `baseFontSize` multiplied by the `baseLineHeight` and the `proximityFactor` if `proximity` is `true`.
+
+## Example Uses of Shevy Methods
+
+```jsx
+import React from 'react'
+import Shevy from 'shevyjs'
+
+const shevy = new Shevy()
+const {
+  lineHeightSpacing: lhs,
+  baseSpacing: bs
+} = shevy // Destructure and alias methods
+
+const wrap = {
+  marginBottom: lhs(2)
+}
+
+const box = {
+  padding: bs(.5),
+  marginBottom: bs()
+}
+
+const MyComponent = () => (
+  <div style={wrap}>
+    <div style={box}>Box 1</div>
+    <div style={box}>Box 2</div>
+  </div>
+)
+```
