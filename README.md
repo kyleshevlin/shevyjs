@@ -2,7 +2,7 @@
 
 > Perfect vertical rhythm for typography in CSS-in-JS
 
-ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevlin/shevy) and makes them available for CSS-in-JS systems. Shevy will do all the math required to keep your typography on your design systems baseline.
+ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevlin/shevy) and makes them available for CSS-in-JS systems. Shevy will do all the math required to keep your typography on your design system's baseline.
 
 ## Installation
 
