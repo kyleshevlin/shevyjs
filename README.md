@@ -24,7 +24,7 @@ Be sure that you get the `shevyjs` module, otherwise you might accidentally impo
 
 ShevyJS is not designed for any particular framework or CSS-in-JS solution. It's built with plain JavaScript and can be used anywhere you can use JavaScript. The following example will use React, but you should be able to apply these concepts to your needs with ease.
 
-```javascript
+```jsx
 import React from 'react'
 import Shevy from 'shevyjs'
 
