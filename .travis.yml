@@ -12,6 +12,8 @@ before_script:
   - npm prune
 script:
   - yarn run validate
+after_success:
+  - yarn run report-coverage
 branches:
   only:
     - master
