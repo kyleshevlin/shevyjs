@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["radhoc"] = factory();
+		exports["shevyjs"] = factory();
 	else
-		root["radhoc"] = factory();
+		root["shevyjs"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
