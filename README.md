@@ -1,6 +1,7 @@
 # ShevyJS
 
 [![Build Status](https://travis-ci.org/kyleshevlin/shevyjs.svg?branch=master)](https://travis-ci.org/kyleshevlin/shevyjs)
+[![codecov](https://codecov.io/gh/kyleshevlin/shevyjs/branch/master/graph/badge.svg)](https://codecov.io/gh/kyleshevlin/shevyjs)
 
 > Perfect vertical rhythm for typography in CSS-in-JS
 
