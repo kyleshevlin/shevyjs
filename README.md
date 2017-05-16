@@ -2,7 +2,7 @@
 
 > Perfect vertical rhythm for typography in CSS-in-JS
 
-ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevlin/shevy) and makes them available for CSS-in-JS systems. Shevy will do all the math required to keep your typography on your design system's baseline.
+ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevlin/shevy) and makes them available for CSS-in-JS systems. Shevy will do all the math required to keep your typography (and more) on your design system's baseline.
 
 ## Installation
 
@@ -22,7 +22,7 @@ Be sure that you get the `shevyjs` module, otherwise you might accidentally impo
 
 ## Usage
 
-ShevyJS is not designed for any particular framework or CSS-in-JS solution. It's built with plain JavaScript and can be used anywhere you can use JavaScript. The following example will use React, but you should be able to apply these concepts to your needs with ease.
+ShevyJS is not designed for any particular framework or CSS-in-JS solution. It can be used anywhere you can use JavaScript. The following example will use React, but you should be able to apply these concepts to your needs with ease.
 
 ```jsx
 import React from 'react'
@@ -41,9 +41,13 @@ const MyComponent = () => (
 export default MyComponent
 ```
 
+Creating a new instance of Shevy will generate a set of properties that you can use for your styles in your components. You could create one instance that you export around the various parts of your application so that you use the same settings throughout your project.
+
 ## Default Options
 
-ShevyJS comes with a set of defaults that can be easily overwritten. To overwrite any of these options, pass an options object into `Shevy()` at instantiation.
+ShevyJS comes with a set of defaults that can be easily overwritten. To overwrite any of these options, pass an options object into `Shevy()` at instantiation. Your options object will be merged with the default options, so you can declare as many or as few of the options as you would like.
+
+Here are the defaults:
 
 ```javascript
 const defaultOptions = {
@@ -55,6 +59,8 @@ const defaultOptions = {
   proximityFactor: 0.85
 }
 ```
+
+Below is a description of what each option does for ShevyJS.
 
 ### baseFontSize
 
@@ -74,7 +80,7 @@ This determines whether a bottom margin will be added to your style objects.
 
 ### proximity
 
-It is often more aesthetically pleasing to bring your margins closer than your baseline would typically warrant. Setting this to true will enable the `proximityFactor` option which will allow you to modify the size of your margins.
+It is often more aesthetically pleasing to make your margins smaller than your baseline would typically warrant. This is due to the fact that line height in CSS is applied above and below the font size. This results in half the extra line height sitting below the text. Adding spacing beyond this, while mathematically correct, may not be the look you are going for. Setting `proximity` to true will enable the `proximityFactor` option which will allow you to modify the size of your margins.
 
 ### proximityFactor
 
