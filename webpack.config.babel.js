@@ -8,7 +8,7 @@ export default {
   output: {
     path: join(__dirname, 'dist'),
     libraryTarget: 'umd',
-    library: 'radhoc'
+    library: 'shevyjs'
   },
   devtool: 'source-map',
   module: {
