@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Shevyjs is a CSS-in-JS solution for perfect vertical rhythm with your typography",
   "main": "src/index.js",
+  "files": [
+    "dist"
+  ],
   "repository": "git@github.com:kyleshevlin/shevyjs.git",
   "author": "Kyle Shevlin <kyle.a.shevlin@gmail.com> (http://kyleshevlin.com/)",
   "license": "MIT",
