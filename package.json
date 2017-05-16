@@ -7,6 +7,7 @@
   "author": "Kyle Shevlin <kyle.a.shevlin@gmail.com> (http://kyleshevlin.com/)",
   "license": "MIT",
   "scripts": {
+    "precommit": "npm run validate",
     "prebuild": "rimraf dist",
     "build": "npm-run-all --parallel build:*",
     "build:main": "babel --out-dir dist src",
@@ -32,6 +33,7 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.13.3",
     "jest": "^19.0.2",
     "npm-run-all": "^4.0.2",
     "rimraf": "^2.6.1",
