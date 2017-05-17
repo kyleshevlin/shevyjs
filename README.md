@@ -90,6 +90,20 @@ It is often more aesthetically pleasing to make your margins smaller than your b
 
 This value will be multiplied against the base spacing determined by ShevyJS's mathematics, and will either increase or decrease the margin bottoms by this factor.
 
+## Properties
+
+Each instance of Shevy exposes a set of properties to use for your styles. Each property is a JavaScript object of styles. Here are the available properties:
+
+* h1, h2, h3, h4, h5, h6 (assuming `baseFontScale` has a length of 6, fewer if the length is less)
+* body
+* content
+
+`h1` through `h6` properties map to the results of calculating your options.
+
+The `body` property is intended to go on the `<body>` tag selector and is ported over from the original Shevy. This may be less necessary in a component based JS system and might be deprecated in the future.
+
+The `content` tag is intended to be used for any base content level components. In the original Shevy, this was a mixin that directly applied styles to the `<p>`, `<ol>`, `<ul>`, and `<pre>` tags. Now in ShevyJS, you have much more freedome to apply these styles to whatever component you deem fit.
+
 ## Methods
 
 Shevy has two methods that can be useful in your design system for creating distances that fall in line with your baseline grid.
