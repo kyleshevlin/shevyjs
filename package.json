@@ -2,7 +2,7 @@
   "name": "shevyjs",
   "version": "0.0.0-development",
   "description": "Shevyjs is a CSS-in-JS solution for perfect vertical rhythm with your typography",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
