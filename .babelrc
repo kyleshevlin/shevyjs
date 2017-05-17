@@ -1,7 +1,7 @@
 {
   "plugins": [
-    "transform-object-rest-spread",
-    "transform-es2015-modules-commonjs"
+    "transform-es2015-modules-commonjs",
+    "transform-object-rest-spread"
   ],
   "presets": ["es2015"]
 }
