@@ -30,7 +30,7 @@ ShevyJS is not designed for any particular framework or CSS-in-JS solution. It c
 
 ```jsx
 import React from 'react'
-import Shevy from 'shevyjs'
+import Shevy from 'shevyjs' // const Shevy = require('shevyjs').default if using CommonJS
 
 const shevy = new Shevy() // creates a new Shevy instance with the default options
 const { h1, content } = shevy // Destructures the styles for h1 and content-based tags
