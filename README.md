@@ -22,6 +22,8 @@ Or, with Yarn:
 yarn add shevyjs -D
 ```
 
+### Warning
+
 Be sure that you get the `shevyjs` module, otherwise you might accidentally import the Sass version of this library instead.
 
 ## Usage
@@ -98,11 +100,29 @@ Each instance of Shevy exposes a set of properties to use for your styles. Each 
 * body
 * content
 
-`h1` through `h6` properties map to the results of calculating your options.
+`h1` through `h6` properties map to the results of calculating your options. Here is an example of one of these objects:
 
-The `body` property is intended to go on the `<body>` tag selector and is ported over from the original Shevy. This may be less necessary in a component based JS system and might be deprecated in the future.
+```javascript
+const shevy = new Shevy()
 
-The `content` tag is intended to be used for any base content level components. In the original Shevy, this was a mixin that directly applied styles to the `<p>`, `<ol>`, `<ul>`, and `<pre>` tags. Now in ShevyJS, you have much more freedome to apply these styles to whatever component you deem fit.
+console.log(shevy.h1) // { fontSize: '48px', lineHeight: 1, marginBottom: '24px' }
+```
+
+The `body` property is intended to go on the `<body>` tag selector and is ported over from the original Shevy. This may be less necessary in a component based JS system and might be deprecated in the future. Here is an example of the `body` object:
+
+```javascript
+const shevy = new Shevy()
+
+console.log(shevy.body) // { fontSize: '16px', lineHeight: 1.5 }
+```
+
+The `content` tag is intended to be used for any base content level components. In the original Shevy, this was a mixin that directly applied styles to the `<p>`, `<ol>`, `<ul>`, and `<pre>` tags. Now in ShevyJS, you have much more freedom to apply these styles to whatever component you deem fit. Here is an example of the `content` object:
+
+```javascript
+const shevy = new Shevy()
+
+console.log(shevy.content) // { fontSize: '16px', lineHeight: 1.5, marginBottom: '24px' }
+```
 
 ## Methods
 
@@ -117,6 +137,8 @@ The `lineHeightSpacing()` method takes one argument, a number (which defaults to
 The `baseSpacing()` method takes one argument, a number (which defaults to 1), and multiplies it with the result of `baseFontSize` multiplied by the `baseLineHeight` and the `proximityFactor` if `proximity` is `true`.
 
 ## Example Uses of Shevy Methods
+
+### As Inline Styles
 
 ```jsx
 import React from 'react'
@@ -142,5 +164,139 @@ const MyComponent = () => (
     <div style={box}>Box 1</div>
     <div style={box}>Box 2</div>
   </div>
+)
+```
+
+### With Styled Components
+
+```jsx
+import React from 'react'
+import styled from 'styled-components'
+import Shevy from 'shevyjs'
+
+const shevy = new Shevy()
+const {
+  baseSpacing: bs,
+  h1: {
+    fontSize,
+    lineHeight,
+    marginBottom
+  }
+} = shevy
+
+const Wrap = styled.div`
+  padding: ${bs()};
+  margin-bottom: ${bs(2)};
+`
+
+const Heading = styled.h1`
+  font-size: ${fontSize};
+  line-height: ${lineHeight};
+  margin-bottom: ${marginBottom};
+`
+
+const MyComponent = () => (
+  <Wrap>
+    <Heading>Shevy with Styled Components!</Heading>
+  </Wrap>
+)
+```
+
+### With Glamorous
+
+```jsx
+import React from 'react'
+import glamorous from 'glamorous'
+import Shevy from 'shevyjs'
+
+const shevy = new Shevy()
+const {
+  baseSpacing: bs,
+  h1
+} = shevy
+
+const Wrap = glamorous.div({
+  padding: bs(),
+  marginBottom: bs(2)
+})
+
+const Heading = glamorous.h1(h1)
+
+const MyComponent = () => (
+  <Wrap>
+    <Heading>Shevy with Glamorous!</Heading>
+  </Wrap>
+)
+```
+
+You can also do something like this with Glamorous:
+
+```jsx
+import React from 'react'
+import glamorous from 'glamorous'
+import Shevy from 'shevyjs'
+
+const shevy = new Shevy()
+const {
+  baseSpacing: bs,
+  h1
+} = shevy
+const { Div, H1 } = glamorous
+
+const MyComponent = () => (
+  <Div padding={bs()}>
+    <H1 {...h1}>Shevy with Glamorous!</H1>
+  </Div>
+)
+```
+
+### With Emotion
+
+```javascript
+import shevy from 'shevyjs'
+import { css } from 'emotion'
+
+const shevy = new Shevy()
+const { content } = shevy
+const app = document.getElementById('root')
+const myStyle = css`
+  color: rebeccapurple;
+  font-size: ${content.fontSize};
+`
+app.classList.add(myStyle)
+```
+
+And Emotion with React:
+
+```jsx
+import React from 'react'
+import styled, { css } from 'emotion'
+import Shevy from 'shevyjs'
+
+const shevy = new Shevy()
+const {
+  baseSpacing: bs,
+  h1: {
+    fontSize,
+    lineHeight,
+    marginBottom
+  }
+} = shevy
+
+const Wrap = styled('div)`
+  padding: ${bs()};
+  margin-bottom: ${bs(2)};
+`
+
+const Heading = styled('h1')`
+  font-size: ${fontSize};
+  line-height: ${lineHeight};
+  margin-bottom: ${marginBottom};
+`
+
+const MyComponent = () => (
+  <Wrap>
+    <Heading>Shevy with Emotion and React!</Heading>
+  </Wrap>
 )
 ```

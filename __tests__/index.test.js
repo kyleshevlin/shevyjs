@@ -65,8 +65,8 @@ describe('Shevy', () => {
         expect(shevy.proximity).toEqual(false)
       })
 
-      it('proximityFactor is .85', () => {
-        expect(shevy.proximityFactor).toEqual(.85)
+      it('proximityFactor is 0.85', () => {
+        expect(shevy.proximityFactor).toEqual(0.85)
       })
     })
 
