@@ -283,7 +283,7 @@ const {
   }
 } = shevy
 
-const Wrap = styled('div)`
+const Wrap = styled('div')`
   padding: ${bs()};
   margin-bottom: ${bs(2)};
 `
