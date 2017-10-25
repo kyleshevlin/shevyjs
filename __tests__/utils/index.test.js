@@ -1,5 +1,6 @@
 import Shevy from '../../src'
 import * as utils from '../../src/utils'
+import { fontScalePresets } from '../../src/constants'
 
 describe('Utils', () => {
   describe('getFontValue', () => {
@@ -67,6 +68,30 @@ describe('Utils', () => {
 
         expect(trimmedArray.length).toEqual(6)
         expect(trimmedArray).toEqual(expectedArray)
+      })
+    })
+  })
+
+  describe('getFontScale', () => {
+    const { getFontScale } = utils
+
+    describe('baseFontScale as an array', () => {
+      const baseFontScaleAsArray = [1, 2, 3, 4, 5, 6]
+
+      it('returns array with modification', () => {
+        expect(getFontScale(baseFontScaleAsArray)).toEqual(baseFontScaleAsArray)
+      })
+    })
+
+    describe('baseFontScale as a string', () => {
+      const baseFontScaleAsString = 'perfect_fourth'
+
+      it('returns an array from fontScalePresets matching key', () => {
+        expect(getFontScale(baseFontScaleAsString)).toEqual(fontScalePresets.perfect_fourth)
+      })
+
+      it('throws an error if key is not found', () => {
+        expect(() => { getFontScale('not_a_preset') }).toThrow(/No Font Scale Preset Found/)
       })
     })
   })

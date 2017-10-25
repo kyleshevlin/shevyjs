@@ -1,3 +1,5 @@
+import { fontScalePresets } from '../constants'
+
 export const getFontValue = size => {
   return parseFloat(size)
 }
@@ -14,6 +16,18 @@ export const getFontUnit = size => {
 
 export const trimArrayToMaxOf6 = array => {
   return array.length <= 6 ? array : array.slice(0, 6)
+}
+
+export const getFontScale = fontScale => {
+  if (Array.isArray(fontScale)) {
+    return trimArrayToMaxOf6(fontScale)
+  }
+
+  if (fontScalePresets.hasOwnProperty(fontScale)) {
+    return fontScalePresets[fontScale]
+  } else {
+    throw new Error(`No Font Scale Preset Found for "${fontScale}", the presets available are: "${Object.keys(fontScalePresets)}"`)
+  }
 }
 
 export function calcHeadingFontSize (thisArg, factor) {

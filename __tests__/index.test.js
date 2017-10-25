@@ -1,4 +1,5 @@
 import Shevy from '../src'
+import { fontScalePresets } from '../src/constants'
 
 describe('Shevy', () => {
   it('is defined', () => {
@@ -357,28 +358,52 @@ describe('Shevy', () => {
     })
 
     describe('baseFontScale', () => {
-      describe('has length < 6', () => {
-        const shevy = new Shevy({
-          baseFontScale: [3, 2, 1]
+      describe('value as an array', () => {
+        describe('has length < 6', () => {
+          const shevy = new Shevy({
+            baseFontScale: [3, 2, 1]
+          })
+
+          describe('Undefined Headings', () => {
+            const { h4, h5, h6 } = shevy
+
+            it('h4 is undefined', () => { expect(h4).not.toBeDefined() })
+            it('h5 is undefined', () => { expect(h5).not.toBeDefined() })
+            it('h6 is undefined', () => { expect(h6).not.toBeDefined() })
+          })
         })
 
-        describe('Undefined Headings', () => {
-          const { h4, h5, h6 } = shevy
+        describe('has length > 6', () => {
+          const shevy = new Shevy({
+            baseFontScale: [7, 6, 5, 4, 3, 2, 1]
+          })
 
-          it('h4 is undefined', () => { expect(h4).not.toBeDefined() })
-          it('h5 is undefined', () => { expect(h5).not.toBeDefined() })
-          it('h6 is undefined', () => { expect(h6).not.toBeDefined() })
+          it('should trim array to length of 6, removing from the end', () => {
+            const expectedArray = [7, 6, 5, 4, 3, 2]
+            expect(shevy.baseFontScale).toEqual(expectedArray)
+          })
         })
       })
 
-      describe('has length > 6', () => {
-        const shevy = new Shevy({
-          baseFontScale: [7, 6, 5, 4, 3, 2, 1]
+      describe('value as a string', () => {
+        describe('has valid preset name', () => {
+          const shevy = new Shevy({
+            baseFontScale: 'perfect_fourth'
+          })
+
+          it('should have correct preset font scale', () => {
+            const expectedArray = fontScalePresets.perfect_fourth
+            expect(shevy.baseFontScale).toEqual(expectedArray)
+          })
         })
 
-        it('should trim array to length of 6, removing from the end', () => {
-          const expectedArray = [7, 6, 5, 4, 3, 2]
-          expect(shevy.baseFontScale).toEqual(expectedArray)
+        describe('has an invalid preset name', () => {
+          it('should throw an error if preset does not exist', () => {
+            expect(() => {
+              // eslint-disable-next-line
+              new Shevy({ baseFontScale: 'not_valid' })
+            }).toThrow()
+          })
         })
       })
     })
