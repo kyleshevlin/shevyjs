@@ -32,7 +32,7 @@ var Shevy = function () {
     this.baseFontSize = baseFontSize;
     this.baseFontUnit = (0, _utils.getFontUnit)(baseFontSize);
     this.baseLineHeight = baseLineHeight;
-    this.baseFontScale = (0, _utils.trimArrayToMaxOf6)(baseFontScale);
+    this.baseFontScale = (0, _utils.getFontScale)(baseFontScale);
     this.addMarginBottom = addMarginBottom;
     this.proximity = proximity;
     this.proximityFactor = proximityFactor;
@@ -42,7 +42,7 @@ var Shevy = function () {
     this.baseSpacing = this.baseSpacing.bind(this);
 
     // Set headings
-    baseFontScale.forEach(function (factor, index) {
+    this.baseFontScale.forEach(function (factor, index) {
       var heading = _constants.headings[index];
       _this[heading] = {
         fontSize: (0, _utils.calcHeadingFontSize)(_this, factor),

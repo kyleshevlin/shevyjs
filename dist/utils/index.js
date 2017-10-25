@@ -3,9 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getFontScale = exports.trimArrayToMaxOf6 = exports.getFontUnit = exports.getFontValue = undefined;
 exports.calcHeadingFontSize = calcHeadingFontSize;
 exports.calcHeadingLineHeight = calcHeadingLineHeight;
 exports.calcHeadingMarginBottom = calcHeadingMarginBottom;
+
+var _constants = require('../constants');
+
 var getFontValue = exports.getFontValue = function getFontValue(size) {
   return parseFloat(size);
 };
@@ -22,6 +26,18 @@ var getFontUnit = exports.getFontUnit = function getFontUnit(size) {
 
 var trimArrayToMaxOf6 = exports.trimArrayToMaxOf6 = function trimArrayToMaxOf6(array) {
   return array.length <= 6 ? array : array.slice(0, 6);
+};
+
+var getFontScale = exports.getFontScale = function getFontScale(fontScale) {
+  if (Array.isArray(fontScale)) {
+    return trimArrayToMaxOf6(fontScale);
+  }
+
+  if (_constants.fontScalePresets.hasOwnProperty(fontScale)) {
+    return _constants.fontScalePresets[fontScale];
+  } else {
+    throw new Error('No Font Scale Preset Found for "' + fontScale + '", the presets available are: "' + Object.keys(_constants.fontScalePresets) + '"');
+  }
 };
 
 function calcHeadingFontSize(thisArg, factor) {
