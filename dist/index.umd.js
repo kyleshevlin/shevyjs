@@ -86,6 +86,14 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var fontScalePresets = exports.fontScalePresets = {
+  majorSecond: [1.802, 1.602, 1.424, 1.266, 1.125, 1],
+  minorThird: [2.488, 2.074, 1.728, 1.44, 1.2, 1],
+  majorThird: [3.052, 2.441, 1.953, 1.563, 1.25, 1],
+  perfectFourth: [4.209, 3.157, 2.369, 1.777, 1.333, 1],
+  augmentedFourth: [5.653, 3.998, 2.827, 1.999, 1.414, 1]
+};
+
 var defaultOptions = exports.defaultOptions = {
   baseFontSize: '16px',
   baseLineHeight: 1.5,
@@ -107,9 +115,13 @@ var headings = exports.headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getFontScale = exports.trimArrayToMaxOf6 = exports.getFontUnit = exports.getFontValue = undefined;
 exports.calcHeadingFontSize = calcHeadingFontSize;
 exports.calcHeadingLineHeight = calcHeadingLineHeight;
 exports.calcHeadingMarginBottom = calcHeadingMarginBottom;
+
+var _constants = __webpack_require__(0);
+
 var getFontValue = exports.getFontValue = function getFontValue(size) {
   return parseFloat(size);
 };
@@ -126,6 +138,18 @@ var getFontUnit = exports.getFontUnit = function getFontUnit(size) {
 
 var trimArrayToMaxOf6 = exports.trimArrayToMaxOf6 = function trimArrayToMaxOf6(array) {
   return array.length <= 6 ? array : array.slice(0, 6);
+};
+
+var getFontScale = exports.getFontScale = function getFontScale(fontScale) {
+  if (Array.isArray(fontScale)) {
+    return trimArrayToMaxOf6(fontScale);
+  }
+
+  if (_constants.fontScalePresets.hasOwnProperty(fontScale)) {
+    return _constants.fontScalePresets[fontScale];
+  } else {
+    throw new Error('No Font Scale Preset Found for "' + fontScale + '", the presets available are: "' + Object.keys(_constants.fontScalePresets) + '"');
+  }
 };
 
 function calcHeadingFontSize(thisArg, factor) {
@@ -220,7 +244,7 @@ var Shevy = function () {
     this.baseFontSize = baseFontSize;
     this.baseFontUnit = (0, _utils.getFontUnit)(baseFontSize);
     this.baseLineHeight = baseLineHeight;
-    this.baseFontScale = (0, _utils.trimArrayToMaxOf6)(baseFontScale);
+    this.baseFontScale = (0, _utils.getFontScale)(baseFontScale);
     this.addMarginBottom = addMarginBottom;
     this.proximity = proximity;
     this.proximityFactor = proximityFactor;
@@ -230,7 +254,7 @@ var Shevy = function () {
     this.baseSpacing = this.baseSpacing.bind(this);
 
     // Set headings
-    baseFontScale.forEach(function (factor, index) {
+    this.baseFontScale.forEach(function (factor, index) {
       var heading = _constants.headings[index];
       _this[heading] = {
         fontSize: (0, _utils.calcHeadingFontSize)(_this, factor),

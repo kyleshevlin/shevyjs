@@ -2,7 +2,7 @@ import { defaultOptions, headings } from './constants'
 import {
   getFontValue,
   getFontUnit,
-  trimArrayToMaxOf6,
+  getFontScale,
   calcHeadingFontSize,
   calcHeadingLineHeight,
   calcHeadingMarginBottom
@@ -23,7 +23,7 @@ export default class Shevy {
     this.baseFontSize = baseFontSize
     this.baseFontUnit = getFontUnit(baseFontSize)
     this.baseLineHeight = baseLineHeight
-    this.baseFontScale = trimArrayToMaxOf6(baseFontScale)
+    this.baseFontScale = getFontScale(baseFontScale)
     this.addMarginBottom = addMarginBottom
     this.proximity = proximity
     this.proximityFactor = proximityFactor
@@ -33,7 +33,7 @@ export default class Shevy {
     this.baseSpacing = this.baseSpacing.bind(this)
 
     // Set headings
-    baseFontScale.forEach((factor, index) => {
+    this.baseFontScale.forEach((factor, index) => {
       const heading = headings[index]
       this[heading] = {
         fontSize: calcHeadingFontSize(this, factor),
