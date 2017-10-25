@@ -78,16 +78,16 @@ describe('Utils', () => {
     describe('baseFontScale as an array', () => {
       const baseFontScaleAsArray = [1, 2, 3, 4, 5, 6]
 
-      it('returns array with modification', () => {
+      it('returns array without modification', () => {
         expect(getFontScale(baseFontScaleAsArray)).toEqual(baseFontScaleAsArray)
       })
     })
 
     describe('baseFontScale as a string', () => {
-      const baseFontScaleAsString = 'perfect_fourth'
+      const baseFontScaleAsString = 'perfectFourth'
 
       it('returns an array from fontScalePresets matching key', () => {
-        expect(getFontScale(baseFontScaleAsString)).toEqual(fontScalePresets.perfect_fourth)
+        expect(getFontScale(baseFontScaleAsString)).toEqual(fontScalePresets.perfectFourth)
       })
 
       it('throws an error if key is not found', () => {

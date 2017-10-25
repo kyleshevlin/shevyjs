@@ -388,11 +388,11 @@ describe('Shevy', () => {
       describe('value as a string', () => {
         describe('has valid preset name', () => {
           const shevy = new Shevy({
-            baseFontScale: 'perfect_fourth'
+            baseFontScale: 'perfectFourth'
           })
 
           it('should have correct preset font scale', () => {
-            const expectedArray = fontScalePresets.perfect_fourth
+            const expectedArray = fontScalePresets.perfectFourth
             expect(shevy.baseFontScale).toEqual(expectedArray)
           })
         })
@@ -400,7 +400,7 @@ describe('Shevy', () => {
         describe('has an invalid preset name', () => {
           it('should throw an error if preset does not exist', () => {
             expect(() => {
-              // eslint-disable-next-line
+              // eslint-disable-next-line no-new
               new Shevy({ baseFontScale: 'not_valid' })
             }).toThrow()
           })
