@@ -78,9 +78,9 @@ This is used to determine the line height calculations in Shevy. Each line heigh
 
 ### baseFontScale
 
-This is an array of max length 6 (any values beyond the 6th will be trimmed) that is used to generate the `h1` through `h6` styles. Each value should be a number, that will be multiplied by the `baseFontSize` to generate the font size for that heading. 
+This is an array, of max length 6 (any values beyond the 6th will be trimmed), that is used to generate the `h1` through `h6` styles. Each value should be a number, that will be multiplied by the `baseFontSize` to generate the font size for that heading. 
 
-Font Scale Presets are available based [ModularScale.com](http://www.modularscale.com/). If `baseFontScale` is a string it will be used to match by key to the following presets:
+Font scale presets are available based on [ModularScale.com](http://www.modularscale.com/). If `baseFontScale` is a string, it will attempt to match one of the following presets by key. **If a match does not exist, an error will be thrown.** The presets are:
 
 ```javascript
 {
@@ -91,8 +91,6 @@ Font Scale Presets are available based [ModularScale.com](http://www.modularscal
   augmentedFourth: [5.653, 3.998, 2.827, 1.999, 1.414, 1]
 }
 ```
-
-**Note** An error will be thrown if string is not a preset.
 
 ### addMarginBottom
 
