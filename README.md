@@ -13,13 +13,13 @@ ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevli
 Shevy is available as a module from npm:
 
 ```
-npm install shevyjs --save-dev
+npm install shevyjs
 ```
 
 Or, with Yarn:
 
 ```
-yarn add shevyjs -D
+yarn add shevyjs
 ```
 
 ### Warning
