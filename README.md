@@ -214,54 +214,6 @@ const MyComponent = () => (
 )
 ```
 
-### With Glamorous
-
-```jsx
-import React from 'react'
-import glamorous from 'glamorous'
-import Shevy from 'shevyjs'
-
-const shevy = new Shevy()
-const {
-  baseSpacing: bs,
-  h1
-} = shevy
-
-const Wrap = glamorous.div({
-  padding: bs(),
-  marginBottom: bs(2)
-})
-
-const Heading = glamorous.h1(h1)
-
-const MyComponent = () => (
-  <Wrap>
-    <Heading>Shevy with Glamorous!</Heading>
-  </Wrap>
-)
-```
-
-You can also do something like this with Glamorous:
-
-```jsx
-import React from 'react'
-import glamorous from 'glamorous'
-import Shevy from 'shevyjs'
-
-const shevy = new Shevy()
-const {
-  baseSpacing: bs,
-  h1
-} = shevy
-const { Div, H1 } = glamorous
-
-const MyComponent = () => (
-  <Div padding={bs()}>
-    <H1 {...h1}>Shevy with Glamorous!</H1>
-  </Div>
-)
-```
-
 ### With Emotion
 
 ```javascript
