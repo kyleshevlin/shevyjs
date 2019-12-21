@@ -16,7 +16,7 @@ export default {
       {
         test: /\.js$/,
         use: 'babel-loader',
-        include: context
+        include: [context]
       }
     ]
   }
