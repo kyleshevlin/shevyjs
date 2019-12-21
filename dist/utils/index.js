@@ -1,21 +1,23 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getFontScale = exports.trimArrayToMaxOf6 = exports.getFontUnit = exports.getFontValue = undefined;
 exports.calcHeadingFontSize = calcHeadingFontSize;
 exports.calcHeadingLineHeight = calcHeadingLineHeight;
 exports.calcHeadingMarginBottom = calcHeadingMarginBottom;
+exports.getFontScale = exports.trimArrayToMaxOf6 = exports.getFontUnit = exports.getFontValue = void 0;
 
-var _constants = require('../constants');
+var _constants = require("../constants");
 
-var getFontValue = exports.getFontValue = function getFontValue(size) {
+const getFontValue = size => {
   return parseFloat(size);
 };
 
-var getFontUnit = exports.getFontUnit = function getFontUnit(size) {
-  var match = size.match(/px|r?em$/);
+exports.getFontValue = getFontValue;
+
+const getFontUnit = size => {
+  const match = size.match(/px|r?em$/);
 
   if (!match) {
     throw new Error('Unsupported font unit: Shevy only supports px, em, or rem.');
@@ -24,11 +26,15 @@ var getFontUnit = exports.getFontUnit = function getFontUnit(size) {
   return match[0];
 };
 
-var trimArrayToMaxOf6 = exports.trimArrayToMaxOf6 = function trimArrayToMaxOf6(array) {
+exports.getFontUnit = getFontUnit;
+
+const trimArrayToMaxOf6 = array => {
   return array.length <= 6 ? array : array.slice(0, 6);
 };
 
-var getFontScale = exports.getFontScale = function getFontScale(fontScale) {
+exports.trimArrayToMaxOf6 = trimArrayToMaxOf6;
+
+const getFontScale = fontScale => {
   if (Array.isArray(fontScale)) {
     return trimArrayToMaxOf6(fontScale);
   }
@@ -36,28 +42,31 @@ var getFontScale = exports.getFontScale = function getFontScale(fontScale) {
   if (_constants.fontScalePresets.hasOwnProperty(fontScale)) {
     return _constants.fontScalePresets[fontScale];
   } else {
-    throw new Error('No Font Scale Preset Found for "' + fontScale + '", the presets available are: "' + Object.keys(_constants.fontScalePresets) + '"');
+    throw new Error(`No Font Scale Preset Found for "${fontScale}", the presets available are: "${Object.keys(_constants.fontScalePresets)}"`);
   }
 };
 
+exports.getFontScale = getFontScale;
+
 function calcHeadingFontSize(thisArg, factor) {
-  var baseFontSize = thisArg.baseFontSize;
-
-  var value = getFontValue(baseFontSize);
-  var unit = getFontUnit(baseFontSize);
-
-  return '' + value * factor + unit;
+  const {
+    baseFontSize
+  } = thisArg;
+  const value = getFontValue(baseFontSize);
+  const unit = getFontUnit(baseFontSize);
+  return `${value * factor}${unit}`;
 }
 
 function calcHeadingLineHeight(thisArg, factor) {
-  var lineHeightSpacing = thisArg.lineHeightSpacing;
-
-  var fontSize = calcHeadingFontSize(thisArg, factor);
-  var fontValue = getFontValue(fontSize);
-  var spacing = lineHeightSpacing();
-  var spacingValue = getFontValue(spacing);
-  var lineHeight = 0;
-  var multiplier = 1;
+  const {
+    lineHeightSpacing
+  } = thisArg;
+  const fontSize = calcHeadingFontSize(thisArg, factor);
+  const fontValue = getFontValue(fontSize);
+  const spacing = lineHeightSpacing();
+  const spacingValue = getFontValue(spacing);
+  let lineHeight = 0;
+  let multiplier = 1;
 
   if (fontValue <= spacingValue) {
     lineHeight = spacingValue / fontValue;
@@ -77,17 +86,17 @@ function calcHeadingMarginBottom(thisArg, factor, addMarginBottom) {
     return undefined;
   }
 
-  var baseSpacing = thisArg.baseSpacing;
-
-  var spacing = baseSpacing();
-  var spacingUnit = getFontUnit(spacing);
+  const {
+    baseSpacing
+  } = thisArg;
+  const spacing = baseSpacing();
+  const spacingUnit = getFontUnit(spacing);
 
   if (spacingUnit === 'em') {
-    var fontSize = calcHeadingFontSize(thisArg, factor);
-    var fontValue = getFontValue(fontSize);
-    var spacingValue = getFontValue(spacing);
-
-    return '' + spacingValue / fontValue + spacingUnit;
+    const fontSize = calcHeadingFontSize(thisArg, factor);
+    const fontValue = getFontValue(fontSize);
+    const spacingValue = getFontValue(spacing);
+    return `${spacingValue / fontValue}${spacingUnit}`;
   } else {
     return spacing;
   }

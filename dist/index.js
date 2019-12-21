@@ -1,63 +1,52 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _constants = require("./constants");
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _utils = require("./utils");
 
-var _constants = require('./constants');
-
-var _utils = require('./utils');
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Shevy = function () {
-  function Shevy(options) {
-    var _this = this;
-
-    _classCallCheck(this, Shevy);
-
-    var mergedOptions = _extends({}, _constants.defaultOptions, options);
-    var baseFontSize = mergedOptions.baseFontSize,
-        baseLineHeight = mergedOptions.baseLineHeight,
-        baseFontScale = mergedOptions.baseFontScale,
-        addMarginBottom = mergedOptions.addMarginBottom,
-        proximity = mergedOptions.proximity,
-        proximityFactor = mergedOptions.proximityFactor;
-
-
+class Shevy {
+  constructor(options) {
+    const mergedOptions = { ..._constants.defaultOptions,
+      ...options
+    };
+    const {
+      baseFontSize,
+      baseLineHeight,
+      baseFontScale,
+      addMarginBottom,
+      proximity,
+      proximityFactor
+    } = mergedOptions;
     this.baseFontSize = baseFontSize;
     this.baseFontUnit = (0, _utils.getFontUnit)(baseFontSize);
     this.baseLineHeight = baseLineHeight;
     this.baseFontScale = (0, _utils.getFontScale)(baseFontScale);
     this.addMarginBottom = addMarginBottom;
     this.proximity = proximity;
-    this.proximityFactor = proximityFactor;
+    this.proximityFactor = proximityFactor; // Binding methods
 
-    // Binding methods
     this.lineHeightSpacing = this.lineHeightSpacing.bind(this);
-    this.baseSpacing = this.baseSpacing.bind(this);
+    this.baseSpacing = this.baseSpacing.bind(this); // Set headings
 
-    // Set headings
-    this.baseFontScale.forEach(function (factor, index) {
-      var heading = _constants.headings[index];
-      _this[heading] = {
-        fontSize: (0, _utils.calcHeadingFontSize)(_this, factor),
-        lineHeight: (0, _utils.calcHeadingLineHeight)(_this, factor),
-        marginBottom: (0, _utils.calcHeadingMarginBottom)(_this, factor, addMarginBottom)
+    this.baseFontScale.forEach((factor, index) => {
+      const heading = _constants.headings[index];
+      this[heading] = {
+        fontSize: (0, _utils.calcHeadingFontSize)(this, factor),
+        lineHeight: (0, _utils.calcHeadingLineHeight)(this, factor),
+        marginBottom: (0, _utils.calcHeadingMarginBottom)(this, factor, addMarginBottom)
       };
-    });
+    }); // Set Body
 
-    // Set Body
     this.body = {
       fontSize: this.baseFontSize,
       lineHeight: this.baseLineHeight
-    };
+    }; // Set Content
 
-    // Set Content
     this.content = {
       fontSize: this.baseFontSize,
       lineHeight: this.baseLineHeight,
@@ -65,40 +54,34 @@ var Shevy = function () {
     };
   }
 
-  _createClass(Shevy, [{
-    key: 'lineHeightSpacing',
-    value: function lineHeightSpacing() {
-      var factor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      var baseFontSize = this.baseFontSize,
-          baseLineHeight = this.baseLineHeight;
+  lineHeightSpacing(factor = 1) {
+    const {
+      baseFontSize,
+      baseLineHeight
+    } = this;
+    const value = (0, _utils.getFontValue)(baseFontSize);
+    const unit = (0, _utils.getFontUnit)(baseFontSize);
+    return `${value * baseLineHeight * factor}${unit}`;
+  }
 
-      var value = (0, _utils.getFontValue)(baseFontSize);
-      var unit = (0, _utils.getFontUnit)(baseFontSize);
+  baseSpacing(factor = 1) {
+    const {
+      baseFontSize,
+      baseLineHeight,
+      proximity,
+      proximityFactor
+    } = this;
+    const value = (0, _utils.getFontValue)(baseFontSize);
+    const unit = (0, _utils.getFontUnit)(baseFontSize);
+    let spacing = value * baseLineHeight * factor;
 
-      return '' + value * baseLineHeight * factor + unit;
+    if (proximity) {
+      spacing = spacing * proximityFactor;
     }
-  }, {
-    key: 'baseSpacing',
-    value: function baseSpacing() {
-      var factor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      var baseFontSize = this.baseFontSize,
-          baseLineHeight = this.baseLineHeight,
-          proximity = this.proximity,
-          proximityFactor = this.proximityFactor;
 
-      var value = (0, _utils.getFontValue)(baseFontSize);
-      var unit = (0, _utils.getFontUnit)(baseFontSize);
-      var spacing = value * baseLineHeight * factor;
+    return `${spacing}${unit}`;
+  }
 
-      if (proximity) {
-        spacing = spacing * proximityFactor;
-      }
-
-      return '' + spacing + unit;
-    }
-  }]);
-
-  return Shevy;
-}();
+}
 
 exports.default = Shevy;
