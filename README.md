@@ -74,7 +74,7 @@ This is the size you want to base your typography on. Typically, this will be th
 
 ### baseLineHeight
 
-This is used to determine the line height calculations in Shevy. Each line height calculated will be a multiple or dividend of this value. Note that ShevyJS may use half-increments when necessary to keep line heights from being unreasonably large - in other words, every line height will be of the form `<some whole number> * 0.5 * baseLineHeight`. _It is required that this value be unitless and a number_.
+This is used to determine the line height calculations in Shevy. Each line height calculated will be a multiple or dividend of `baseLineHeight / 2`. Calculating `line-heights` in increments of half the `baseLineHeight` value avoids excessively large `line-height`s for `font-size`s that barely exceed the previous increment, while still maintaining the established vertical rhythm. _It is required that this value be unitless and a number_.
 
 ### baseFontScale
 
