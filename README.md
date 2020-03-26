@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/kyleshevlin/shevyjs/branch/master/graph/badge.svg)](https://codecov.io/gh/kyleshevlin/shevyjs)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-> Perfect vertical rhythm for typography in CSS-in-JS
+> Perfect vertical rhythm for typography and more in CSS-in-JS
 
 ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevlin/shevy) and makes them available for CSS-in-JS systems. Shevy will do all the math required to keep your typography (and more) on your design system's baseline.
 
@@ -263,4 +263,46 @@ const MyComponent = () => (
     <Heading>Shevy with Emotion and React!</Heading>
   </Wrap>
 )
+```
+
+### Recipes
+
+Create a `Spacer` and `Wrapper` component to use with `shevy` (inspired by [this Max Stoiber article](https://mxstbr.com/thoughts/margin)):
+
+```jsx
+import React from 'react'
+import Shevy from "shevyjs";
+
+const shevy = new Shevy();
+const bs = shevy.baseSpacing;
+
+function Spacer({ hz = 0, vt = 0 }) {
+  const styles = {
+    ...(Boolean(hz) && { marginLeft: bs(hz) }),
+    ...(Boolean(vt) && { marginTop: bs(vt) })
+  };
+
+  return <div style={styles} />;
+}
+
+function Wrapper({
+  children,
+  hz = 0,
+  hzl = 0,
+  hzr = 0,
+  vt = 0,
+  vtt = 0,
+  vtb = 0
+}) {
+  const styles = {
+    ...(Boolean(hz) && { marginLeft: bs(hz), marginRight: bs(hz) }),
+    ...(Boolean(vt) && { marginTop: bs(vt), marginBottom: bs(vt) }),
+    ...(Boolean(hzl) && { marginLeft: bs(hzl) }),
+    ...(Boolean(hzr) && { marginRight: bs(hzr) }),
+    ...(Boolean(vtt) && { marginTop: bs(vtt) }),
+    ...(Boolean(vtb) && { marginBottom: bs(vtb) })
+  };
+
+  return <div style={styles}>{children}</div>;
+}
 ```
