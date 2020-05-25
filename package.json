@@ -51,7 +51,7 @@
     "jest": "^24.9.0",
     "npm-run-all": "^4.0.2",
     "rimraf": "^2.6.1",
-    "semantic-release": "^15.14.0",
+    "semantic-release": "^17.0.8",
     "validate-commit-msg": "^2.12.1",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10"
