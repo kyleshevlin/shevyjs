@@ -15,9 +15,7 @@
     }
   },
   "scripts": {
-    "precommit": "npm run validate",
     "commit": "git-cz",
-    "commitmsg": "validate-commit-msg",
     "prebuild": "rimraf dist",
     "build": "npm-run-all --parallel build:*",
     "build:main": "babel src --out-dir dist",
@@ -29,6 +27,12 @@
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "validate": "npm-run-all --parallel lint test build",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run validate",
+      "commit-msg": "validate-commit-msg"
+    }
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
