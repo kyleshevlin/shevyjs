@@ -6,12 +6,23 @@ Object.defineProperty(exports, "__esModule", {
 exports.calcHeadingFontSize = calcHeadingFontSize;
 exports.calcHeadingLineHeight = calcHeadingLineHeight;
 exports.calcHeadingMarginBottom = calcHeadingMarginBottom;
-exports.getFontScale = exports.trimArrayToMaxOf6 = exports.getFontUnit = exports.getFontValue = void 0;
+exports.getFontScale = exports.trimArrayToMaxOf6 = exports.getFontUnit = exports.getFontValue = exports.parseNumber = void 0;
 
 var _constants = require("../constants");
 
-const getFontValue = size => {
-  return parseFloat(size);
+const parseNumber = (thisArg, value) => {
+  const {
+    precision,
+    usePrecision
+  } = thisArg;
+  const float = parseFloat(value);
+  return usePrecision ? Number(float.toFixed(precision)) : float;
+};
+
+exports.parseNumber = parseNumber;
+
+const getFontValue = (thisArg, size) => {
+  return parseNumber(thisArg, size);
 };
 
 exports.getFontValue = getFontValue;
@@ -39,7 +50,7 @@ const getFontScale = fontScale => {
     return trimArrayToMaxOf6(fontScale);
   }
 
-  if (_constants.fontScalePresets.hasOwnProperty(fontScale)) {
+  if (_constants.fontScalePresets[fontScale]) {
     return _constants.fontScalePresets[fontScale];
   } else {
     throw new Error(`No Font Scale Preset Found for "${fontScale}", the presets available are: "${Object.keys(_constants.fontScalePresets)}"`);
@@ -52,7 +63,7 @@ function calcHeadingFontSize(thisArg, factor) {
   const {
     baseFontSize
   } = thisArg;
-  const value = getFontValue(baseFontSize);
+  const value = getFontValue(thisArg, baseFontSize);
   const unit = getFontUnit(baseFontSize);
   return `${value * factor}${unit}`;
 }
@@ -62,23 +73,23 @@ function calcHeadingLineHeight(thisArg, factor) {
     lineHeightSpacing
   } = thisArg;
   const fontSize = calcHeadingFontSize(thisArg, factor);
-  const fontValue = getFontValue(fontSize);
+  const fontValue = getFontValue(thisArg, fontSize);
   const spacing = lineHeightSpacing();
-  const spacingValue = getFontValue(spacing);
+  const spacingValue = getFontValue(thisArg, spacing);
   let lineHeight = 0;
   let multiplier = 1;
 
   if (fontValue <= spacingValue) {
     lineHeight = spacingValue / fontValue;
   } else {
-    while (getFontValue(lineHeightSpacing(multiplier)) < fontValue) {
+    while (getFontValue(thisArg, lineHeightSpacing(multiplier)) < fontValue) {
       multiplier += 0.5;
     }
 
-    lineHeight = getFontValue(lineHeightSpacing(multiplier)) / fontValue;
+    lineHeight = getFontValue(thisArg, lineHeightSpacing(multiplier)) / fontValue;
   }
 
-  return lineHeight;
+  return parseNumber(thisArg, lineHeight);
 }
 
 function calcHeadingMarginBottom(thisArg, factor, addMarginBottom) {
@@ -94,9 +105,9 @@ function calcHeadingMarginBottom(thisArg, factor, addMarginBottom) {
 
   if (spacingUnit === 'em') {
     const fontSize = calcHeadingFontSize(thisArg, factor);
-    const fontValue = getFontValue(fontSize);
-    const spacingValue = getFontValue(spacing);
-    return `${spacingValue / fontValue}${spacingUnit}`;
+    const fontValue = getFontValue(thisArg, fontSize);
+    const spacingValue = getFontValue(thisArg, spacing);
+    return `${parseNumber(thisArg, spacingValue / fontValue)}${spacingUnit}`;
   } else {
     return spacing;
   }

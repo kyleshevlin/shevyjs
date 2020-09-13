@@ -20,7 +20,9 @@ class Shevy {
       baseFontScale,
       addMarginBottom,
       proximity,
-      proximityFactor
+      proximityFactor,
+      precision,
+      usePrecision
     } = mergedOptions;
     this.baseFontSize = baseFontSize;
     this.baseFontUnit = (0, _utils.getFontUnit)(baseFontSize);
@@ -28,7 +30,9 @@ class Shevy {
     this.baseFontScale = (0, _utils.getFontScale)(baseFontScale);
     this.addMarginBottom = addMarginBottom;
     this.proximity = proximity;
-    this.proximityFactor = proximityFactor; // Binding methods
+    this.proximityFactor = proximityFactor;
+    this.precision = precision;
+    this.usePrecision = usePrecision; // Binding methods
 
     this.lineHeightSpacing = this.lineHeightSpacing.bind(this);
     this.baseSpacing = this.baseSpacing.bind(this); // Set headings
@@ -59,9 +63,10 @@ class Shevy {
       baseFontSize,
       baseLineHeight
     } = this;
-    const value = (0, _utils.getFontValue)(baseFontSize);
+    const value = (0, _utils.getFontValue)(this, baseFontSize);
+    const spacing = (0, _utils.parseNumber)(this, value * baseLineHeight * factor);
     const unit = (0, _utils.getFontUnit)(baseFontSize);
-    return `${value * baseLineHeight * factor}${unit}`;
+    return `${spacing}${unit}`;
   }
 
   baseSpacing(factor = 1) {
@@ -71,7 +76,7 @@ class Shevy {
       proximity,
       proximityFactor
     } = this;
-    const value = (0, _utils.getFontValue)(baseFontSize);
+    const value = (0, _utils.getFontValue)(this, baseFontSize);
     const unit = (0, _utils.getFontUnit)(baseFontSize);
     let spacing = value * baseLineHeight * factor;
 
@@ -79,7 +84,7 @@ class Shevy {
       spacing = spacing * proximityFactor;
     }
 
-    return `${spacing}${unit}`;
+    return `${(0, _utils.parseNumber)(this, spacing)}${unit}`;
   }
 
 }

@@ -1,7 +1,16 @@
 {
   "env": {
-    "jest/globals": true
+    "browser": true,
+    "es2021": true,
+    "jest": true
   },
-  "extends": ["standard"],
-  "plugins": ["jest"]
+  "extends": ["eslint:recommended", "standard"],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["jest"],
+  "rules": {
+    "space-before-function-paren": "off"
+  }
 }

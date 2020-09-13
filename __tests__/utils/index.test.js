@@ -8,10 +8,30 @@ describe('Utils', () => {
 
     it('returns a number of correct value', () => {
       const size = '16px'
-      const value = getFontValue(size)
+      const shevy = new Shevy()
+      const value = getFontValue(shevy, size)
 
       expect(typeof value).toEqual('number')
       expect(value).toEqual(16)
+    })
+
+    it('correctly parses floats', () => {
+      const size = '1.234567em'
+      const shevy = new Shevy()
+      const value = getFontValue(shevy, size)
+
+      expect(typeof value).toEqual('number')
+      expect(value).toEqual(1.234567)
+    })
+
+    it('uses precision', () => {
+      const shevy = new Shevy({ usePrecision: true })
+      const value1 = getFontValue(shevy, '1.234567em')
+      const value2 = getFontValue(shevy, '7.654321em')
+
+      expect(typeof value1).toEqual('number')
+      expect(value1).toEqual(1.2346)
+      expect(value2).toEqual(7.6543)
     })
   })
 
@@ -36,7 +56,9 @@ describe('Utils', () => {
     })
 
     it('throws error for unsupported unit', () => {
-      expect(() => { getFontUnit('1vw') }).toThrow()
+      expect(() => {
+        getFontUnit('1vw')
+      }).toThrow()
     })
   })
 
@@ -87,11 +109,15 @@ describe('Utils', () => {
       const baseFontScaleAsString = 'perfectFourth'
 
       it('returns an array from fontScalePresets matching key', () => {
-        expect(getFontScale(baseFontScaleAsString)).toEqual(fontScalePresets.perfectFourth)
+        expect(getFontScale(baseFontScaleAsString)).toEqual(
+          fontScalePresets.perfectFourth
+        )
       })
 
       it('throws an error if key is not found', () => {
-        expect(() => { getFontScale('not_a_preset') }).toThrow(/No Font Scale Preset Found/)
+        expect(() => {
+          getFontScale('not_a_preset')
+        }).toThrow(/No Font Scale Preset Found/)
       })
     })
   })
@@ -141,7 +167,11 @@ describe('Utils', () => {
       describe('and baseFontSize is', () => {
         it('16px, returns 24px', () => {
           const shevy = new Shevy()
-          const calculated = calcHeadingMarginBottom(shevy, factor, addMarginBottom)
+          const calculated = calcHeadingMarginBottom(
+            shevy,
+            factor,
+            addMarginBottom
+          )
 
           expect(calculated).toEqual('24px')
         })
@@ -150,7 +180,11 @@ describe('Utils', () => {
           const shevy = new Shevy({
             baseFontSize: '1em'
           })
-          const calculated = calcHeadingMarginBottom(shevy, factor, addMarginBottom)
+          const calculated = calcHeadingMarginBottom(
+            shevy,
+            factor,
+            addMarginBottom
+          )
 
           expect(calculated).toEqual('1.5em')
         })
@@ -159,7 +193,11 @@ describe('Utils', () => {
           const shevy = new Shevy({
             baseFontSize: '1rem'
           })
-          const calculated = calcHeadingMarginBottom(shevy, factor, addMarginBottom)
+          const calculated = calcHeadingMarginBottom(
+            shevy,
+            factor,
+            addMarginBottom
+          )
 
           expect(calculated).toEqual('1.5rem')
         })

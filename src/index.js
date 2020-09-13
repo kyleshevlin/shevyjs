@@ -5,11 +5,12 @@ import {
   getFontScale,
   calcHeadingFontSize,
   calcHeadingLineHeight,
-  calcHeadingMarginBottom
+  calcHeadingMarginBottom,
+  parseNumber
 } from './utils'
 
 export default class Shevy {
-  constructor (options) {
+  constructor(options) {
     const mergedOptions = { ...defaultOptions, ...options }
     const {
       baseFontSize,
@@ -17,7 +18,9 @@ export default class Shevy {
       baseFontScale,
       addMarginBottom,
       proximity,
-      proximityFactor
+      proximityFactor,
+      precision,
+      usePrecision
     } = mergedOptions
 
     this.baseFontSize = baseFontSize
@@ -27,6 +30,8 @@ export default class Shevy {
     this.addMarginBottom = addMarginBottom
     this.proximity = proximity
     this.proximityFactor = proximityFactor
+    this.precision = precision
+    this.usePrecision = usePrecision
 
     // Binding methods
     this.lineHeightSpacing = this.lineHeightSpacing.bind(this)
@@ -56,22 +61,18 @@ export default class Shevy {
     }
   }
 
-  lineHeightSpacing (factor = 1) {
+  lineHeightSpacing(factor = 1) {
     const { baseFontSize, baseLineHeight } = this
-    const value = getFontValue(baseFontSize)
+    const value = getFontValue(this, baseFontSize)
+    const spacing = parseNumber(this, value * baseLineHeight * factor)
     const unit = getFontUnit(baseFontSize)
 
-    return `${value * baseLineHeight * factor}${unit}`
+    return `${spacing}${unit}`
   }
 
-  baseSpacing (factor = 1) {
-    const {
-      baseFontSize,
-      baseLineHeight,
-      proximity,
-      proximityFactor
-    } = this
-    const value = getFontValue(baseFontSize)
+  baseSpacing(factor = 1) {
+    const { baseFontSize, baseLineHeight, proximity, proximityFactor } = this
+    const value = getFontValue(this, baseFontSize)
     const unit = getFontUnit(baseFontSize)
     let spacing = value * baseLineHeight * factor
 
@@ -79,6 +80,6 @@ export default class Shevy {
       spacing = spacing * proximityFactor
     }
 
-    return `${spacing}${unit}`
+    return `${parseNumber(this, spacing)}${unit}`
   }
 }
