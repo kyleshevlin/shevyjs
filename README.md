@@ -62,7 +62,9 @@ const defaultOptions = {
   baseFontScale: [3, 2.5, 2, 1.5, 1.25, 1],
   addMarginBottom: true,
   proximity: false,
-  proximityFactor: 0.85
+  proximityFactor: 0.85,
+  precision: 4,
+  usePrecision: false
 }
 ```
 
@@ -78,7 +80,7 @@ This is used to determine the line height calculations in Shevy. Each line heigh
 
 ### baseFontScale
 
-This is an array, of max length 6 (any values beyond the 6th will be trimmed), that is used to generate the `h1` through `h6` styles. Each value should be a number, that will be multiplied by the `baseFontSize` to generate the font size for that heading. 
+This is an array, of max length 6 (any values beyond the 6th will be trimmed), that is used to generate the `h1` through `h6` styles. Each value should be a number, that will be multiplied by the `baseFontSize` to generate the font size for that heading.
 
 Font scale presets are available based on [ModularScale.com](http://www.modularscale.com/). If `baseFontScale` is a string, it will attempt to match one of the following presets by key. **If a match does not exist, an error will be thrown.** The presets are:
 
@@ -104,13 +106,21 @@ It is often more aesthetically pleasing to make your margins smaller than your b
 
 This value will be multiplied against the base spacing determined by ShevyJS's mathematics, and will either increase or decrease the margin bottoms by this factor.
 
+### precision
+
+This value, when `usePrecision` is `true`, will round calculations to this number of values after the decimal. Example: `1.23456` with a precision of `4` becomes `1.2346`.
+
+### usePrecision
+
+This value determines whether the `precision` value is applied in `Shevy`'s calculations.
+
 ## Properties
 
 Each instance of Shevy exposes a set of properties to use for your styles. Each property is a JavaScript object of styles. Here are the available properties:
 
-* h1, h2, h3, h4, h5, h6 (assuming `baseFontScale` has a length of 6, fewer if the length is less)
-* body
-* content
+- h1, h2, h3, h4, h5, h6 (assuming `baseFontScale` has a length of 6, fewer if the length is less)
+- body
+- content
 
 `h1` through `h6` properties map to the results of calculating your options. Here is an example of one of these objects:
 
@@ -157,17 +167,14 @@ import React from 'react'
 import Shevy from 'shevyjs'
 
 const shevy = new Shevy()
-const {
-  lineHeightSpacing: lhs,
-  baseSpacing: bs
-} = shevy // Destructure and alias methods
+const { lineHeightSpacing: lhs, baseSpacing: bs } = shevy // Destructure and alias methods
 
 const wrap = {
   marginBottom: lhs(2)
 }
 
 const box = {
-  padding: bs(.5),
+  padding: bs(0.5),
   marginBottom: bs()
 }
 
@@ -189,11 +196,7 @@ import Shevy from 'shevyjs'
 const shevy = new Shevy()
 const {
   baseSpacing: bs,
-  h1: {
-    fontSize,
-    lineHeight,
-    marginBottom
-  }
+  h1: { fontSize, lineHeight, marginBottom }
 } = shevy
 
 const Wrap = styled.div`
@@ -240,11 +243,7 @@ import Shevy from 'shevyjs'
 const shevy = new Shevy()
 const {
   baseSpacing: bs,
-  h1: {
-    fontSize,
-    lineHeight,
-    marginBottom
-  }
+  h1: { fontSize, lineHeight, marginBottom }
 } = shevy
 
 const Wrap = styled('div')`
@@ -271,18 +270,18 @@ Create a `Spacer` and `Wrapper` component to use with `shevy` (inspired by [this
 
 ```jsx
 import React from 'react'
-import Shevy from "shevyjs";
+import Shevy from 'shevyjs'
 
-const shevy = new Shevy();
-const bs = shevy.baseSpacing;
+const shevy = new Shevy()
+const bs = shevy.baseSpacing
 
 function Spacer({ hz = 0, vt = 0 }) {
   const styles = {
     ...(Boolean(hz) && { marginLeft: bs(hz) }),
     ...(Boolean(vt) && { marginTop: bs(vt) })
-  };
+  }
 
-  return <div style={styles} />;
+  return <div style={styles} />
 }
 
 function Wrapper({
@@ -301,8 +300,8 @@ function Wrapper({
     ...(Boolean(hzr) && { marginRight: bs(hzr) }),
     ...(Boolean(vtt) && { marginTop: bs(vtt) }),
     ...(Boolean(vtb) && { marginBottom: bs(vtb) })
-  };
+  }
 
-  return <div style={styles}>{children}</div>;
+  return <div style={styles}>{children}</div>
 }
 ```
