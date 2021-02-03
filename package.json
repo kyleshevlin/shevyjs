@@ -63,6 +63,6 @@
     "semantic-release": "^17.1.1",
     "validate-commit-msg": "^2.12.1",
     "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^4.5.0"
   }
 }
