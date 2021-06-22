@@ -44,7 +44,7 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@babel/register": "^7.7.7",
-    "babel-jest": "^26.3.0",
+    "babel-jest": "^27.0.5",
     "babel-loader": "^8.0.6",
     "codecov": "^3.6.1",
     "commitizen": "^4.0.3",
