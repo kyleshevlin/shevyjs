@@ -266,7 +266,7 @@ const MyComponent = () => (
 
 ### Recipes
 
-Create a `Spacer` and `Wrapper` component to use with `shevy` (inspired by [this Max Stoiber article](https://mxstbr.com/thoughts/margin)):
+Create a `Spacer` component to use with `shevy` (inspired by [this Max Stoiber article](https://mxstbr.com/thoughts/margin)):
 
 ```jsx
 import React from 'react'
@@ -275,33 +275,26 @@ import Shevy from 'shevyjs'
 const shevy = new Shevy()
 const bs = shevy.baseSpacing
 
-function Spacer({ hz = 0, vt = 0 }) {
-  const styles = {
-    ...(Boolean(hz) && { marginLeft: bs(hz) }),
-    ...(Boolean(vt) && { marginTop: bs(vt) })
-  }
-
-  return <div style={styles} />
-}
-
-function Wrapper({
+function Spacer({
   children,
-  hz = 0,
-  hzl = 0,
-  hzr = 0,
-  vt = 0,
-  vtt = 0,
-  vtb = 0
+  all = 0,
+  horz = 0,
+  vert = 0,
+  top = 0,
+  right = 0,
+  bottom = 0,
+  left = 0
 }) {
-  const styles = {
-    ...(Boolean(hz) && { marginLeft: bs(hz), marginRight: bs(hz) }),
-    ...(Boolean(vt) && { marginTop: bs(vt), marginBottom: bs(vt) }),
-    ...(Boolean(hzl) && { marginLeft: bs(hzl) }),
-    ...(Boolean(hzr) && { marginRight: bs(hzr) }),
-    ...(Boolean(vtt) && { marginTop: bs(vtt) }),
-    ...(Boolean(vtb) && { marginBottom: bs(vtb) })
+  const margins = {
+    ...(all && { margin: bs(all) }),
+    ...(horz && { marginLeft: bs(horz), marginRight: bs(horz) }),
+    ...(vert && { marginTop: bs(vert), marginBottom: bs(vert) }),
+    ...(top && { marginTop: bs(top) }),
+    ...(right && { marginRight: bs(right) }),
+    ...(bottom && { marginBottom: bs(bottom) }),
+    ...(left && { marginLeft: bs(left) }),
   }
 
-  return <div style={styles}>{children}</div>
+  return <div style={margins}>{children}</div>
 }
 ```
