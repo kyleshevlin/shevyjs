@@ -1,68 +1,55 @@
 {
-  "name": "shevyjs",
-  "version": "0.0.0-development",
-  "description": "Shevyjs is a CSS-in-JS solution for perfect vertical rhythm with your typography",
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "repository": "git@github.com:kyleshevlin/shevyjs.git",
-  "author": "Kyle Shevlin <kyle.a.shevlin@gmail.com> (http://kyleshevlin.com/)",
+  "version": "1.2.0",
   "license": "MIT",
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
-    "commit": "git-cz",
-    "prebuild": "rimraf dist",
-    "build": "npm-run-all --parallel build:*",
-    "build:main": "babel src --out-dir dist",
-    "build:umd": "webpack --output-filename index.umd.js",
-    "build:umd.min": "webpack -p --output-filename index.umd.min.js",
-    "lint": "eslint ./src ./__tests__",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "validate": "npm-run-all --parallel lint test build",
-    "semantic-release": "semantic-release"
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
   },
+  "peerDependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "npm run validate",
-      "commit-msg": "validate-commit-msg"
+      "pre-commit": "tsdx lint"
     }
   },
-  "release": {
-    "branches": [
-      "master"
-    ]
+  "prettier": {
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
+  "name": "shevyjs",
+  "author": "Kyle Shevlin",
+  "module": "dist/shevyjs.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/shevyjs.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/shevyjs.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/register": "^7.7.7",
-    "babel-jest": "^26.3.0",
-    "babel-loader": "^8.0.6",
-    "codecov": "^3.6.1",
-    "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^2.0.0",
-    "eslint": "^7.9.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jest": "^24.0.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^3.0.1",
-    "husky": "^4.3.0",
-    "jest": "^26.4.2",
-    "npm-run-all": "^4.0.2",
-    "rimraf": "^3.0.2",
-    "semantic-release": "^17.1.1",
-    "validate-commit-msg": "^2.12.1",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10"
+    "@size-limit/preset-small-lib": "^5.0.3",
+    "husky": "^7.0.1",
+    "size-limit": "^5.0.3",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.3.5"
   }
 }
