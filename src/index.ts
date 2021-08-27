@@ -47,7 +47,7 @@ const UNDEFINED_STYLE = {
 /**
  * Factory function that returns a Shevy object
  */
-export function createShevy(options: ShevyOptions = {}): Shevy {
+export default function createShevy(options: ShevyOptions = {}): Shevy {
   const config = { ...defaultOptions, ...options }
   const {
     baseFontSize,
