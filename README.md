@@ -28,7 +28,7 @@ ShevyJS is not designed for any particular framework or CSS-in-JS solution. It c
 
 ```jsx
 import React from 'react'
-import Shevy from 'shevyjs' // const Shevy = require('shevyjs').default if using CommonJS
+import createShevy from 'shevyjs' // const Shevy = require('shevyjs').default if using CommonJS
 
 const shevy = createShevy() // factory function for creating Shevy objects
 const { h1, content } = shevy // Destructures the styles for h1 and content-based tags
@@ -218,7 +218,7 @@ The `baseSpacing()` method takes one argument, a number (which defaults to 1), a
 
 ```jsx
 import React from 'react'
-import Shevy from 'shevyjs'
+import createShevy from 'shevyjs'
 
 const shevy = createShevy()
 const { lineHeightSpacing: lhs, baseSpacing: bs } = shevy // Destructure and alias methods
@@ -245,7 +245,7 @@ const MyComponent = () => (
 ```jsx
 import React from 'react'
 import styled from 'styled-components'
-import Shevy from 'shevyjs'
+import createShevy from 'shevyjs'
 
 const shevy = createShevy()
 const {
@@ -274,7 +274,7 @@ const MyComponent = () => (
 ### With Emotion
 
 ```javascript
-import shevy from 'shevyjs'
+import createShevy from 'shevyjs'
 import { css } from 'emotion'
 
 const shevy = createShevy()
@@ -324,7 +324,7 @@ Create a `Spacer` component to use with `shevy` (inspired by [this Max Stoiber a
 
 ```jsx
 import React from 'react'
-import Shevy from 'shevyjs'
+import createShevy from 'shevyjs'
 
 const shevy = createShevy()
 const bs = shevy.baseSpacing
