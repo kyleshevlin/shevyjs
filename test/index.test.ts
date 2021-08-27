@@ -1,4 +1,4 @@
-import { createShevy } from '../src'
+import createShevy from '../src'
 
 describe('createShevy', () => {
   describe('Default settings', () => {
