@@ -1,9 +1,5 @@
 # ShevyJS
 
-[![Build Status](https://travis-ci.org/kyleshevlin/shevyjs.svg?branch=master)](https://travis-ci.org/kyleshevlin/shevyjs)
-[![codecov](https://codecov.io/gh/kyleshevlin/shevyjs/branch/master/graph/badge.svg)](https://codecov.io/gh/kyleshevlin/shevyjs)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-
 > Perfect vertical rhythm for typography and more in CSS-in-JS
 
 ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevlin/shevy) and makes them available for CSS-in-JS systems. Shevy will do all the math required to keep your typography (and more) on your design system's baseline.
@@ -34,7 +30,7 @@ ShevyJS is not designed for any particular framework or CSS-in-JS solution. It c
 import React from 'react'
 import Shevy from 'shevyjs' // const Shevy = require('shevyjs').default if using CommonJS
 
-const shevy = new Shevy() // creates a new Shevy instance with the default options
+const shevy = createShevy() // factory function for creating Shevy objects
 const { h1, content } = shevy // Destructures the styles for h1 and content-based tags
 
 const MyComponent = () => (
@@ -47,7 +43,29 @@ const MyComponent = () => (
 export default MyComponent
 ```
 
-Creating a new instance of Shevy will generate a set of properties that you can use for your styles in your components. You could create one instance that you export around the various parts of your application so that you use the same settings throughout your project.
+Creating a Shevy object will generate a set of properties that you can use for your styles in your components. Typically, you'll create a single Shevy object and utilize that throughout your application, but it's certainly possible to make localized `shevy`s for your use cases.
+
+## API
+
+### `createShevy`
+
+`createShevy: (options?: ShevyOptions = {}) => Shevy`
+
+`createShevy` is a factory function for creating Shevy objects. Invoking it without `options` will utilize the `defaultOptions` discussed below. `createShevy` can receive an object of `ShevyOptions` to be merged with the defaults.
+
+The most common use would be something like the following:
+
+```javascript
+// shevy.js
+import createShevy from 'shevyjs'
+
+const shevy = createShevy()
+export default shevy
+
+// I like to alias the baseSpacing function to a shorthand for my projects
+// since it is commonly used for paddings and margins
+export const bs = shevy.baseSpacing
+```
 
 ## Default Options
 
@@ -59,12 +77,10 @@ Here are the defaults:
 const defaultOptions = {
   baseFontSize: '16px',
   baseLineHeight: 1.5,
-  baseFontScale: [3, 2.5, 2, 1.5, 1.25, 1],
-  addMarginBottom: true,
-  proximity: false,
-  proximityFactor: 0.85,
-  precision: 4,
-  usePrecision: false
+  fontScale: [3, 2.5, 2, 1.5, 1.25, 1],
+  includeMarginBottom: true,
+  proximity: null,
+  precision: null,
 }
 ```
 
@@ -72,13 +88,23 @@ Below is a description of what each option does for ShevyJS.
 
 ### baseFontSize
 
-This is the size you want to base your typography on. Typically, this will be the smallest or default size of your typography. It is possible to use `baseFontScale`s in a way that would allow for headings to be smaller than your default font size, but it's unlikely you'll use ShevyJS this way.
+`baseFontSize: string`
+
+This is the size you want to base your typography on. Typically, this will be the smallest or default size of your typography. It is possible to use `fontScale`s in a way that would allow for headings to be smaller than your default font size, but it's unlikely you'll use ShevyJS this way.
 
 ### baseLineHeight
 
-This is used to determine the line height calculations in Shevy. Each line height calculated will be a multiple or dividend of `baseLineHeight / 2`. Calculating `line-heights` in increments of half the `baseLineHeight` value avoids excessively large `line-height`s for `font-size`s that barely exceed the previous increment, while still maintaining the established vertical rhythm. _It is required that this value be unitless and a number_.
+`baseLineHeight: number`
 
-### baseFontScale
+This is used to determine the line height calculations in Shevy. _It is required that this value be unitless and a number_.
+
+Line heights for your headings will be based on multiples of `baseLineHeight / 2`. Half increments of your `baseLineHeight`, while strictly speaking will shift your rhythm, are typically more aesthetically pleasing that strictly using whole increments. This prevents `fontSizes` slightly larger than a `baseLineHeight` multiple from becoming excessively large.
+
+Example: a `fontSize` of `50px` and a `baseLineHeight` of `48px` doesn't result in a `96px` `lineHeight`, but rather a `72px` `lineHeight` (`48/2` gives us a half increment of `24`. `24*3` is the first size greater than `50`, thus `72px`).
+
+### fontScale
+
+`fontScale: number[]`
 
 This is an array, of max length 6 (any values beyond the 6th will be trimmed), that is used to generate the `h1` through `h6` styles. Each value should be a number, that will be multiplied by the `baseFontSize` to generate the font size for that heading.
 
@@ -94,38 +120,62 @@ Font scale presets are available based on [ModularScale.com](http://www.modulars
 }
 ```
 
-### addMarginBottom
+You may supply fewer than 6 values to the `fontScale`. Doing so will result in the corresponding `h*` values return objects that look like:
 
-This determines whether a bottom margin will be added to your style objects.
+```javascript
+{
+  fontSize: undefined,
+  lineHeight: undefined,
+  marginBottom: undefined,
+}
+```
+
+This API was chosen to ensure type-safety and convenience. `h1` through `h6` will always exist on a `shevy` object. You will not need conditionals to check for their existence. But perhaps your application never uses `h4` through `h6`, and thus it's needless to define them. This gives you that flexibility.
+
+### includeMarginBottom
+
+`includeMarginBottom: boolean`
+
+This determines whether a value will be set for the `marginBottom` of your style objects.
 
 ### proximity
 
-It is often more aesthetically pleasing to make your margins smaller than your baseline would typically warrant. This is due to the fact that line height in CSS is applied above and below the font size. This results in half the extra line height sitting below the text. Adding spacing beyond this, while mathematically correct, may not be the look you are going for. Setting `proximity` to true will enable the `proximityFactor` option which will allow you to modify the size of your margins.
+`proximity: null | number`
 
-### proximityFactor
+It is often more aesthetically pleasing to make your margins smaller than your baseline would typically warrant. This is due to the fact that line height in CSS is applied above and below the `fontSize`. This results in half the extra line height sitting below the text. Adding spacing beyond this, while mathematically correct, may not be the look you are going for.
 
-This value will be multiplied against the base spacing determined by ShevyJS's mathematics, and will either increase or decrease the margin bottoms by this factor.
+By default, `proximity` is set to null, but setting it to a `number` will tweak the spacings by that percentage.
 
 ### precision
 
-This value, when `usePrecision` is `true`, will round calculations to this number of values after the decimal. Example: `1.23456` with a precision of `4` becomes `1.2346`.
+`precision: null | number`
 
-### usePrecision
-
-This value determines whether the `precision` value is applied in `Shevy`'s calculations.
+By default, `precision` is set to `null`, but setting it to a number will result in values that do not exceed that number of places after the decimal. Example: `1.23456` with a precision of `4` becomes `1.2346`.
 
 ## Properties
 
-Each instance of Shevy exposes a set of properties to use for your styles. Each property is a JavaScript object of styles. Here are the available properties:
+Each Shevy object comes with a set of properties to use for your styles. Each property is a JavaScript object of the following styles:
 
-- h1, h2, h3, h4, h5, h6 (assuming `baseFontScale` has a length of 6, fewer if the length is less)
-- body
-- content
+```javascript
+{
+  fontSize: string
+  lineHeight: number | string
+  marginBottom: string
+}
+```
+
+There are cases (see [fontScale](#fontScale)) where these properties are `undefined`.
+
+Here are the available properties:
+
+- `h1`, `h2`, `h3`, `h4`, `h5`, `h6`
+- `body`
+- `content`
 
 `h1` through `h6` properties map to the results of calculating your options. Here is an example of one of these objects:
 
 ```javascript
-const shevy = new Shevy()
+const shevy = createShevy()
 
 console.log(shevy.h1) // { fontSize: '48px', lineHeight: 1, marginBottom: '24px' }
 ```
@@ -133,7 +183,7 @@ console.log(shevy.h1) // { fontSize: '48px', lineHeight: 1, marginBottom: '24px'
 The `body` property is intended to go on the `<body>` tag selector and is ported over from the original Shevy. This may be less necessary in a component based JS system and might be deprecated in the future. Here is an example of the `body` object:
 
 ```javascript
-const shevy = new Shevy()
+const shevy = createShevy()
 
 console.log(shevy.body) // { fontSize: '16px', lineHeight: 1.5 }
 ```
@@ -141,7 +191,7 @@ console.log(shevy.body) // { fontSize: '16px', lineHeight: 1.5 }
 The `content` tag is intended to be used for any base content level components. In the original Shevy, this was a mixin that directly applied styles to the `<p>`, `<ol>`, `<ul>`, and `<pre>` tags. Now in ShevyJS, you have much more freedom to apply these styles to whatever component you deem fit. Here is an example of the `content` object:
 
 ```javascript
-const shevy = new Shevy()
+const shevy = createShevy()
 
 console.log(shevy.content) // { fontSize: '16px', lineHeight: 1.5, marginBottom: '24px' }
 ```
@@ -152,11 +202,15 @@ Shevy has two methods that can be useful in your design system for creating dist
 
 ### lineHeightSpacing
 
+`lineHeightSpacing: (factor?: number = 1) => string`
+
 The `lineHeightSpacing()` method takes one argument, a number (which defaults to 1), and multiplies it with the result of the `baseFontSize` multiplied by the `baseLineHeight`.
 
 ### baseSpacing
 
-The `baseSpacing()` method takes one argument, a number (which defaults to 1), and multiplies it with the result of `baseFontSize` multiplied by the `baseLineHeight` and the `proximityFactor` if `proximity` is `true`.
+`baseSpacing: (factor?: number = 1) => string`
+
+The `baseSpacing()` method takes one argument, a number (which defaults to 1), and multiplies it with the result of `baseFontSize` multiplied by the `baseLineHeight`. It is additionally multiplies by `proximity` if it is not `null`.
 
 ## Example Uses of Shevy Methods
 
@@ -166,16 +220,16 @@ The `baseSpacing()` method takes one argument, a number (which defaults to 1), a
 import React from 'react'
 import Shevy from 'shevyjs'
 
-const shevy = new Shevy()
+const shevy = createShevy()
 const { lineHeightSpacing: lhs, baseSpacing: bs } = shevy // Destructure and alias methods
 
 const wrap = {
-  marginBottom: lhs(2)
+  marginBottom: lhs(2),
 }
 
 const box = {
   padding: bs(0.5),
-  marginBottom: bs()
+  marginBottom: bs(),
 }
 
 const MyComponent = () => (
@@ -193,10 +247,10 @@ import React from 'react'
 import styled from 'styled-components'
 import Shevy from 'shevyjs'
 
-const shevy = new Shevy()
+const shevy = createShevy()
 const {
   baseSpacing: bs,
-  h1: { fontSize, lineHeight, marginBottom }
+  h1: { fontSize, lineHeight, marginBottom },
 } = shevy
 
 const Wrap = styled.div`
@@ -223,7 +277,7 @@ const MyComponent = () => (
 import shevy from 'shevyjs'
 import { css } from 'emotion'
 
-const shevy = new Shevy()
+const shevy = createShevy()
 const { content } = shevy
 const app = document.getElementById('root')
 const myStyle = css`
@@ -240,10 +294,10 @@ import React from 'react'
 import styled, { css } from 'emotion'
 import Shevy from 'shevyjs'
 
-const shevy = new Shevy()
+const shevy = createShevy()
 const {
   baseSpacing: bs,
-  h1: { fontSize, lineHeight, marginBottom }
+  h1: { fontSize, lineHeight, marginBottom },
 } = shevy
 
 const Wrap = styled('div')`
@@ -272,7 +326,7 @@ Create a `Spacer` component to use with `shevy` (inspired by [this Max Stoiber a
 import React from 'react'
 import Shevy from 'shevyjs'
 
-const shevy = new Shevy()
+const shevy = createShevy()
 const bs = shevy.baseSpacing
 
 function Spacer({
@@ -283,7 +337,7 @@ function Spacer({
   top = 0,
   right = 0,
   bottom = 0,
-  left = 0
+  left = 0,
 }) {
   const margins = {
     ...(all && { margin: bs(all) }),
