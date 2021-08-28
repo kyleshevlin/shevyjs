@@ -21,6 +21,7 @@ ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevli
   - [Methods](#methods)
     - [lineHeightSpacing](#lineheightspacing)
     - [baseSpacing](#basespacing)
+  - [Upgrade path from v1 to v2](#upgrade-path-from-v1-to-v2)
   - [Example Uses of Shevy Methods](#example-uses-of-shevy-methods)
     - [As Inline Styles](#as-inline-styles)
     - [With Styled Components](#with-styled-components)
