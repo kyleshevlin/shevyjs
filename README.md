@@ -4,6 +4,29 @@
 
 ShevyJS takes the concepts of the original [Shevy](https://github.com/kyleshevlin/shevy) and makes them available for CSS-in-JS systems. Shevy will do all the math required to keep your typography (and more) on your design system's baseline.
 
+- [ShevyJS](#shevyjs)
+  - [Installation](#installation)
+    - [Warning](#warning)
+  - [Usage](#usage)
+  - [API](#api)
+    - [`createShevy`](#createshevy)
+  - [Default Options](#default-options)
+    - [baseFontSize](#basefontsize)
+    - [baseLineHeight](#baselineheight)
+    - [fontScale](#fontscale)
+    - [includeMarginBottom](#includemarginbottom)
+    - [proximity](#proximity)
+    - [precision](#precision)
+  - [Properties](#properties)
+  - [Methods](#methods)
+    - [lineHeightSpacing](#lineheightspacing)
+    - [baseSpacing](#basespacing)
+  - [Example Uses of Shevy Methods](#example-uses-of-shevy-methods)
+    - [As Inline Styles](#as-inline-styles)
+    - [With Styled Components](#with-styled-components)
+    - [With Emotion](#with-emotion)
+    - [Recipes](#recipes)
+
 ## Installation
 
 Shevy is available as a module from npm:
@@ -164,7 +187,7 @@ Each Shevy object comes with a set of properties to use for your styles. Each pr
 }
 ```
 
-There are cases (see [fontScale](#fontScale)) where these properties are `undefined`.
+There are cases (see [fontScale](#fontscale)) where these properties are `undefined`.
 
 Here are the available properties:
 
@@ -211,6 +234,37 @@ The `lineHeightSpacing()` method takes one argument, a number (which defaults to
 `baseSpacing: (factor?: number = 1) => string`
 
 The `baseSpacing()` method takes one argument, a number (which defaults to 1), and multiplies it with the result of `baseFontSize` multiplied by the `baseLineHeight`. It is additionally multiplies by `proximity` if it is not `null`.
+
+## Upgrade path from v1 to v2
+
+There are a few differences between v1 to v2, so here's how to make those changes.
+
+- The default import is no longer a `Shevy` class constructor. It is the `createShevy` factory function.
+
+```diff
+- import Shevy from 'shevyjs'
++ import createShevy from 'shevyjs'
+```
+
+- Replace instances of `new Shevy(options)` with `createShevy(options)`
+
+```diff
+- const shevy = new Shevy()
++ const shevy = createShevy()
+```
+
+- Some `options` properties were renamed:
+
+  - `baseFontScale` is now just `fontScale`
+  - `addMarginBottom` is now `includeMarginBottom`
+
+- Several properties are no longer accessible on the `shevy` object
+
+In v1, `shevy` was an instance of the `Shevy` class. Because of this, certain values were made properties of the class that really didn't need to be. An example would be `this.baseFontScale`. There isn't a good reason for this to need to be on the `Shevy` class.
+
+With the conversion to a simple factory function, it was easy to keep certain values and functions private. This tidies up the exposed API to just the properties for styles, and the methods listed above.
+
+This also improves the types for the project, which will likely improve your editor experience with faster Intellisense for `shevy` objects.
 
 ## Example Uses of Shevy Methods
 
