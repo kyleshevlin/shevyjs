@@ -259,6 +259,22 @@ There are a few differences between v1 to v2, so here's how to make those change
   - `baseFontScale` is now just `fontScale`
   - `addMarginBottom` is now `includeMarginBottom`
 
+- Some `options` properties were modified
+
+  - `precision` and `usePrecision` are now just `precision`. `precision` is a nullable property now, replacing the need for two options.
+  - `proximity` and `proximityFactor` are now just `proximity`. `proximity` is a nullable property now, replacing the need for two options.
+
+```diff
+const options = {
+-  precision: 4,
+-  usePrecision: true,
+-  proximity: true,
+-  proximityFactor: 0.85
++  precision: 4,
++  proximity: 0.85,
+}
+```
+
 - Several properties are no longer accessible on the `shevy` object
 
 In v1, `shevy` was an instance of the `Shevy` class. Because of this, certain values were made properties of the class that really didn't need to be. An example would be `this.baseFontScale`. There isn't a good reason for this to need to be on the `Shevy` class.
